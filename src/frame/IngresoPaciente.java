@@ -134,12 +134,11 @@ public class IngresoPaciente extends JFrame {
 					lblResultado.setText("El diagnóstico no puede estar vacío");
 					lblResultado.setForeground(Color.RED);
 				} else {
-					if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText(), comboBoxMedico.getName(),textAreaDiagnostico.getText())){
+					if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText(), comboBoxMedico.getSelectedItem().toString(),textAreaDiagnostico.getText())){
 						lblResultado.setText("Grabado");
 						lblResultado.setForeground(Color.GREEN);
-						textFieldCodPaciente.setText(conector.getSiguientePaciente());
-						textFieldNombre.setText("");
-						textAreaDiagnostico.setText("");
+						
+						dispose();
 					} else {
 						lblResultado.setText("Error grabando");
 						lblResultado.setForeground(Color.RED);
@@ -163,6 +162,29 @@ public class IngresoPaciente extends JFrame {
 		panel.add(btnCancelar);
 		
 		JButton btnGuardarOtro = new JButton("Guardar y crear otro");
+		btnGuardarOtro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(textFieldNombre.getText() == null){
+					lblResultado.setText("Nombre no puede estar vacío");
+					lblResultado.setForeground(Color.RED);
+				} else if (textAreaDiagnostico.getText() == null){
+					lblResultado.setText("El diagnóstico no puede estar vacío");
+					lblResultado.setForeground(Color.RED);
+				} else {
+					if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText(), comboBoxMedico.getName(),textAreaDiagnostico.getText())){
+						lblResultado.setText("Grabado");
+						lblResultado.setForeground(Color.GREEN);
+						textFieldCodPaciente.setText(conector.getSiguientePaciente());
+						textFieldNombre.setText("");
+						textAreaDiagnostico.setText("");
+					} else {
+						lblResultado.setText("Error grabando");
+						lblResultado.setForeground(Color.RED);
+					}
+				}
+			
+			}
+		});
 		btnGuardarOtro.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnGuardarOtro.setBounds(305, 216, 135, 23);
 		panel.add(btnGuardarOtro);

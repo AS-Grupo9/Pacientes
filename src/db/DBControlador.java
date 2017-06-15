@@ -54,22 +54,33 @@ public class DBControlador
 	 * */
 	public boolean insertarPaciente(String codigoPaciente, String nombre, String codigoMedico, String diagnostico){
 		this.conectar();
-		String query = "INSERT INTO paciente (codigo,nombre,diagnostico) values(?,?,?);";
-		try {
-			PreparedStatement pst = this.con.prepareStatement(query);
-			pst.setInt(1, Integer.parseInt(codigoPaciente));
-			pst.setString(2, nombre);
-			pst.setString(3, diagnostico);			
-			pst.execute();
-			System.out.println("Insercion correcta");
-			this.close();
-			return true;
-		} catch (SQLException e) {
-			System.out.println("Error al ejecutar la query: " + query);
-			//e.printStackTrace();
-			this.close();
-			return false;
-		}
+		String queryUno = "INSERT INTO paciente (codigo,nombre,diagnostico) values(?,?,?);";
+		String queryDos = "INSERT INTO atiende_a (medico,paciente) values(?,?);";
+		
+		
+		try{
+				PreparedStatement pst = this.con.prepareStatement(queryUno);
+				pst.setInt(1, Integer.parseInt(codigoPaciente));
+				pst.setString(2, nombre);
+				pst.setString(3, diagnostico);			
+				pst.execute();
+				System.out.println("Insercion correcta en tabla Paciente");
+				
+				PreparedStatement pst2 = this.con.prepareStatement(queryDos);
+				pst2.setInt(1, Integer.parseInt(codigoMedico));
+				pst2.setInt(2, Integer.parseInt(codigoPaciente));
+				pst2.execute();
+				System.out.println("Insercion correcta en tabla Atiende A");
+				this.close();
+				return true;
+			} catch (SQLException e) {
+				System.out.println("Error al ejecutar la query: " + queryUno);
+				//e.printStackTrace();
+				this.close();
+				return false;
+			}
+			
+		
 	}
 	
 	public void seleccionarDatosPaciente(String codigoPaciente){
