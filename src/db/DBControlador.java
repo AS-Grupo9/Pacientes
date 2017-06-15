@@ -151,6 +151,11 @@ public class DBControlador
 	*/
 	public boolean insertarMedico(String codigoMedico, String nombre, String esp1, String esp2, String esp3){
 		this.conectar();
+		System.out.println("Codigo medico: "+codigoMedico);
+		System.out.println("Codigo nombre: "+nombre);
+		System.out.println("Codigo esp1: "+esp1);
+		System.out.println("Codigo esp2: "+esp2);
+		System.out.println("Codigo esp3: "+esp3);
 		String query = "INSERT INTO medico (codigo,nombre) values(?,?);";
 		try {
 			PreparedStatement pst = this.con.prepareStatement(query);
@@ -158,9 +163,16 @@ public class DBControlador
 			pst.setString(2, nombre);			
 			pst.execute();
 			System.out.println("Medico insertado");
-			this.insertarEspecialidad(codigoMedico, esp1);
-			this.insertarEspecialidad(codigoMedico, esp2);
-			this.insertarEspecialidad(codigoMedico, esp3);			
+			if(!esp1.equals("")){
+				this.insertarEspecialidad(codigoMedico, esp1);
+			}
+			if(!esp2.equals("")){
+				this.insertarEspecialidad(codigoMedico, esp2);
+			}
+			if(!esp3.equals("")){
+				this.insertarEspecialidad(codigoMedico, esp3);
+			}
+				
 			this.close();
 			return true;
 		} catch (SQLException e) {

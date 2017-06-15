@@ -119,7 +119,7 @@ public class IngresoMedico extends JFrame {
 		
 		final JLabel lblResultadoQuery = new JLabel("");
 		lblResultadoQuery.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblResultadoQuery.setBounds(10, 138, 46, 14);
+		lblResultadoQuery.setBounds(10, 234, 161, 14);
 		panel.add(lblResultadoQuery);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -138,11 +138,13 @@ public class IngresoMedico extends JFrame {
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				
 					if(conector.insertarMedico(conector.getSiguienteMedico(), textFieldNombre.getText(),comboBoxEsp1.getSelectedItem().toString(),comboBoxEsp2.getSelectedItem().toString(),comboBoxEsp3.getSelectedItem().toString())){
 						lblResultadoQuery.setText("Grabado");
 						lblResultadoQuery.setForeground(Color.GREEN);
 						textFieldCodPaciente.setText(conector.getSiguienteMedico());
-						textFieldNombre.setText("");						
+						textFieldNombre.setText("");
+						
 					} else {
 						lblResultadoQuery.setText("Error al grabar");
 						lblResultado.setForeground(Color.RED);
@@ -183,9 +185,9 @@ public class IngresoMedico extends JFrame {
 	private void llenarEspecialidades(){
 		ResultSet medicos = conector.getMedicos();
 		try {
-			this.comboBoxEsp1.addItem(null);
-			this.comboBoxEsp2.addItem(null);
-			this.comboBoxEsp3.addItem(null);
+			this.comboBoxEsp1.addItem("");
+			this.comboBoxEsp2.addItem("");
+			this.comboBoxEsp3.addItem("");
 			while(medicos.next()){
 				String codigo = medicos.getString("codigo");
 				String nombre = medicos.getString("nombre");				
