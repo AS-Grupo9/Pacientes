@@ -24,12 +24,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 
-public class IngresoPaciente extends JFrame {
+public class IngresoDiagnostico extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldCodPaciente;
 	private JTextField textFieldNombre;
-	private final JLabel lblResultado;
+	private final JTextArea textAreaDiagnostico;
+	private final JComboBox comboBoxMedico ;
+	private final JLabel lblNombreMedico;
+	private int codigoMedico ;
 	
 	private final DBControlador conector = new DBControlador();
 	/**
@@ -39,7 +42,7 @@ public class IngresoPaciente extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IngresoPaciente frame = new IngresoPaciente();
+					IngresoDiagnostico frame = new IngresoDiagnostico();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,13 +54,13 @@ public class IngresoPaciente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public IngresoPaciente() {
+	public IngresoDiagnostico() {
 		
 		
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("CENTRO MEDICO LOS LAURELES");
-		setBounds(100, 100, 575, 210);
+		setBounds(100, 100, 575, 294);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -91,21 +94,34 @@ public class IngresoPaciente extends JFrame {
 		panel.add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
+		JLabel lblCdigoDelMdico = new JLabel("C\u00F3digo del m\u00E9dico:");
+		lblCdigoDelMdico.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblCdigoDelMdico.setBounds(10, 109, 103, 14);
+		panel.add(lblCdigoDelMdico);
+		
 		JLabel lblDatosDelPaciente = new JLabel("Datos del paciente");
 		lblDatosDelPaciente.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDatosDelPaciente.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblDatosDelPaciente.setBounds(295, 11, 244, 20);
 		panel.add(lblDatosDelPaciente);
 		
-		lblResultado = new JLabel("");
+		textAreaDiagnostico = new JTextArea();
+		textAreaDiagnostico.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textAreaDiagnostico.setBounds(141, 131, 398, 58);
+		panel.add(textAreaDiagnostico);
+		
+		final JLabel lblResultado = new JLabel("");
 		lblResultado.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblResultado.setBounds(10, 216, 161, 14);
 		panel.add(lblResultado);
 		
-		final JLabel lblResultadoQuery = new JLabel("");
-		lblResultadoQuery.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblResultadoQuery.setBounds(10, 138, 46, 14);
-		panel.add(lblResultadoQuery);
+		comboBoxMedico = new JComboBox();
+		
+		comboBoxMedico.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		comboBoxMedico.setBounds(141, 106, 127, 20);
+		panel.add(comboBoxMedico);
+		
+		this.llenarMedicos();
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -114,35 +130,63 @@ public class IngresoPaciente extends JFrame {
 			}
 		});
 		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnCancelar.setBounds(450, 134, 89, 23);
+		btnCancelar.setBounds(450, 216, 89, 23);
 		panel.add(btnCancelar);
 		
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-					if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText())){
-						lblResultadoQuery.setText("Grabado");
-						lblResultadoQuery.setForeground(Color.GREEN);
+				if(textFieldNombre.getText() == null){
+					lblResultado.setText("Nombre no puede estar vacío");
+					lblResultado.setForeground(Color.RED);
+				} else if (textAreaDiagnostico.getText() == null){
+					lblResultado.setText("El diagnóstico no puede estar vacío");
+					lblResultado.setForeground(Color.RED);
+				} else {
+					if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText(), comboBoxMedico.getName(),textAreaDiagnostico.getText())){
+						lblResultado.setText("Grabado");
+						lblResultado.setForeground(Color.GREEN);
 						textFieldCodPaciente.setText(conector.getSiguientePaciente());
-						textFieldNombre.setText("");						
+						textFieldNombre.setText("");
+						textAreaDiagnostico.setText("");
 					} else {
-						lblResultadoQuery.setText("Error al grabar");
+						lblResultado.setText("Error grabando");
 						lblResultado.setForeground(Color.RED);
 					}
-				
+				}
 			
 			}
 		});
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnGuardar.setBounds(345, 134, 95, 23);
+		btnGuardar.setBounds(337, 216, 103, 23);
 		panel.add(btnGuardar);
 		
-
+		JLabel lblDiagnstico = new JLabel("Diagn\u00F3stico:");
+		lblDiagnstico.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblDiagnstico.setBounds(10, 133, 76, 14);
+		panel.add(lblDiagnstico);
+		
+		lblNombreMedico = new JLabel("");
+		lblNombreMedico.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNombreMedico.setBounds(285, 109, 244, 14);
+		panel.add(lblNombreMedico);
 		
 		
 
 	}
 	
+	private void llenarMedicos(){
+		ResultSet medicos = conector.getMedicos();
+		try {
+			while(medicos.next()){
+				String codigo = medicos.getString("codigo");
+				String nombre = medicos.getString("nombre");				
+				this.comboBoxMedico.addItem(codigo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("ERROR");
+		}	
+	}
 	
 }

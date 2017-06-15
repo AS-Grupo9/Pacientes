@@ -79,7 +79,7 @@ public class Principal extends JFrame {
 		JButton btnIngresoDatos = new JButton("Ingreso de datos");
 		btnIngresoDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				IngresoPaciente ingDat = new IngresoPaciente();
+				IngresoDiagnostico ingDat = new IngresoDiagnostico();
 				ingDat.setVisible(true);
 			}
 		});

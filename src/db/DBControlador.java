@@ -52,35 +52,24 @@ public class DBControlador
 	/**
 	 * PACIENTES
 	 * */
-	public boolean insertarPaciente(String codigoPaciente, String nombre, String codigoMedico, String diagnostico){
+	public boolean insertarPaciente(String codigoPaciente, String nombre){
 		this.conectar();
-		String queryUno = "INSERT INTO paciente (codigo,nombre,diagnostico) values(?,?,?);";
-		String queryDos = "INSERT INTO atiende_a (medico,paciente) values(?,?);";
-		
+		String query = "INSERT INTO paciente (codigo,nombre) values(?,?);";
 		
 		try{
-				PreparedStatement pst = this.con.prepareStatement(queryUno);
+				PreparedStatement pst = this.con.prepareStatement(query);
 				pst.setInt(1, Integer.parseInt(codigoPaciente));
-				pst.setString(2, nombre);
-				pst.setString(3, diagnostico);			
+				pst.setString(2, nombre);					
 				pst.execute();
 				System.out.println("Insercion correcta en tabla Paciente");
-				
-				PreparedStatement pst2 = this.con.prepareStatement(queryDos);
-				pst2.setInt(1, Integer.parseInt(codigoMedico));
-				pst2.setInt(2, Integer.parseInt(codigoPaciente));
-				pst2.execute();
-				System.out.println("Insercion correcta en tabla Atiende A");
 				this.close();
 				return true;
 			} catch (SQLException e) {
-				System.out.println("Error al ejecutar la query: " + queryUno);
+				System.out.println("Error al ejecutar la query: " + query);
 				//e.printStackTrace();
 				this.close();
 				return false;
-			}
-			
-		
+			}	
 	}
 	
 	public void seleccionarDatosPaciente(String codigoPaciente){
@@ -160,16 +149,18 @@ public class DBControlador
 		}
 	}
 	*/
-	public boolean insertarMedico(String codigoPaciente, String nombre, String codigoMedico, String diagnostico){
+	public boolean insertarMedico(String codigoMedico, String nombre, String esp1, String esp2, String esp3){
 		this.conectar();
-		String query = "INSERT INTO paciente (codigo,nombre,diagnostico) values(?,?,?);";
+		String query = "INSERT INTO medico (codigo,nombre) values(?,?);";
 		try {
 			PreparedStatement pst = this.con.prepareStatement(query);
-			pst.setInt(1, Integer.parseInt(codigoPaciente));
-			pst.setString(2, nombre);
-			pst.setString(3, diagnostico);			
+			pst.setInt(1, Integer.parseInt(codigoMedico));
+			pst.setString(2, nombre);			
 			pst.execute();
-			System.out.println("Insercion correcta");
+			System.out.println("Medico insertado");
+			this.insertarEspecialidad(codigoMedico, esp1);
+			this.insertarEspecialidad(codigoMedico, esp2);
+			this.insertarEspecialidad(codigoMedico, esp3);			
 			this.close();
 			return true;
 		} catch (SQLException e) {
@@ -177,6 +168,70 @@ public class DBControlador
 			//e.printStackTrace();
 			this.close();
 			return false;
+		}
+	}
+	
+	public boolean insertarEspecialidad(String codigoMedico, String especialidad){
+		this.conectar();
+		String query = "INSERT INTO se_especializa_en (medico,especialidad) values(?,?);";
+		if(especialidad != null) {
+			try {
+				PreparedStatement pst = this.con.prepareStatement(query);
+				pst.setInt(1, Integer.parseInt(codigoMedico));
+				pst.setInt(2, Integer.parseInt(especialidad));
+				pst.execute();
+				System.out.println("Especialidad insertada");
+				this.close();
+				return true;
+			} catch (SQLException e) {
+				System.out.println("Error al ejecutar la query: " + query);
+				//e.printStackTrace();
+				this.close();
+				return false;
+			}
+		} else {
+			return false;
+		}
+		
+	}
+	
+	/**
+	 * DIAGNOSTICO
+	 * */
+	public boolean insertarDiagnostico(String codigoPaciente, String codigoMedico, String diagnostico){
+		this.conectar();
+		String query = "INSERT INTO atiende_a (medico,paciente,diagnostico) values(?,?,?);";
+		
+		
+		try{
+			PreparedStatement pst = this.con.prepareStatement(query);
+			pst.setInt(1, Integer.parseInt(codigoPaciente));
+			pst.setInt(2, Integer.parseInt(codigoMedico));
+			pst.setString(3, diagnostico);			
+			pst.execute();
+			System.out.println("Insercion correcta en tabla Atiende A");
+			this.close();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar la query: " + query);
+			//e.printStackTrace();
+			this.close();
+			return false;
+		}
+					
+	}
+	
+	public ResultSet getEspecialides(){
+		this.conectar();
+		String query = "SELECT * FROM especialidad;";
+		try{
+			PreparedStatement pst = this.con.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			return rs;
+		} catch (Exception e){
+			System.out.println("Error al ejecutar la query: " + query);
+			e.printStackTrace();
+			return null;
 		}
 	}
 }
