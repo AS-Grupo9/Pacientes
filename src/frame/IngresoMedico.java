@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import db.DBControlador;
+import utilidades.ComboBoxItem;
 
 import javax.swing.JButton;
 import java.awt.GridLayout;
@@ -92,21 +93,26 @@ public class IngresoMedico extends JFrame {
 		panel.add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
-		JLabel lblDatosDelPaciente = new JLabel("Datos del paciente");
-		lblDatosDelPaciente.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDatosDelPaciente.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblDatosDelPaciente.setBounds(295, 11, 244, 20);
-		panel.add(lblDatosDelPaciente);
+		JLabel lblDatosDelMedico = new JLabel("Datos del m\u00E9dico");
+		lblDatosDelMedico.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDatosDelMedico.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblDatosDelMedico.setBounds(295, 11, 244, 20);
+		panel.add(lblDatosDelMedico);
 		
 		comboBoxEsp1 = new JComboBox();
+		comboBoxEsp1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBoxEsp1.setBounds(141, 100, 177, 20);
 		panel.add(comboBoxEsp1);
+			
+		
 		
 		comboBoxEsp2 = new JComboBox();
+		comboBoxEsp2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBoxEsp2.setBounds(141, 128, 177, 20);
 		panel.add(comboBoxEsp2);
 		
 		comboBoxEsp3 = new JComboBox();
+		comboBoxEsp3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBoxEsp3.setBounds(141, 155, 177, 20);
 		panel.add(comboBoxEsp3);
 		
@@ -139,11 +145,12 @@ public class IngresoMedico extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				
-					if(conector.insertarMedico(conector.getSiguienteMedico(), textFieldNombre.getText(),comboBoxEsp1.getSelectedItem().toString(),comboBoxEsp2.getSelectedItem().toString(),comboBoxEsp3.getSelectedItem().toString())){
+					if(conector.insertarMedico(conector.getSiguienteMedico(), textFieldNombre.getText(),comboBoxEsp1.getSelectedItem(),comboBoxEsp2.getSelectedItem(),comboBoxEsp3.getSelectedItem())){
 						lblResultadoQuery.setText("Grabado");
 						lblResultadoQuery.setForeground(Color.GREEN);
 						textFieldCodPaciente.setText(conector.getSiguienteMedico());
 						textFieldNombre.setText("");
+						refrescarEspecialidades();
 						
 					} else {
 						lblResultadoQuery.setText("Error al grabar");
@@ -183,17 +190,16 @@ public class IngresoMedico extends JFrame {
 	}
 	
 	private void llenarEspecialidades(){
-		ResultSet medicos = conector.getMedicos();
+		ResultSet especialidades = conector.getEspecialidades();
 		try {
 			this.comboBoxEsp1.addItem("");
 			this.comboBoxEsp2.addItem("");
 			this.comboBoxEsp3.addItem("");
-			while(medicos.next()){
-				String codigo = medicos.getString("codigo");
-				String nombre = medicos.getString("nombre");				
-				this.comboBoxEsp1.addItem(codigo);
-				this.comboBoxEsp2.addItem(codigo);
-				this.comboBoxEsp3.addItem(codigo);
+			while(especialidades.next()){
+				ComboBoxItem item = new ComboBoxItem(especialidades.getString("codigo"), especialidades.getString("nombre"));		
+				this.comboBoxEsp1.addItem(item);
+				this.comboBoxEsp2.addItem(item);
+				this.comboBoxEsp3.addItem(item);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -201,4 +207,10 @@ public class IngresoMedico extends JFrame {
 		}	
 	}
 	
+	private void refrescarEspecialidades(){
+		this.comboBoxEsp1.removeAllItems();	
+		this.comboBoxEsp2.removeAllItems();	
+		this.comboBoxEsp3.removeAllItems();	
+		llenarEspecialidades();	
+	}
 }

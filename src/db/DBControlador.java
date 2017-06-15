@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import controlpac.Paciente;
+import utilidades.ComboBoxItem;
 
 
 public class DBControlador
@@ -149,28 +150,36 @@ public class DBControlador
 		}
 	}
 	*/
-	public boolean insertarMedico(String codigoMedico, String nombre, String esp1, String esp2, String esp3){
+	public boolean insertarMedico(String codigoMedico, String nombre, Object esp1, Object esp2, Object esp3){
 		this.conectar();
-		System.out.println("Codigo medico: "+codigoMedico);
-		System.out.println("Codigo nombre: "+nombre);
-		System.out.println("Codigo esp1: "+esp1);
-		System.out.println("Codigo esp2: "+esp2);
-		System.out.println("Codigo esp3: "+esp3);
+
 		String query = "INSERT INTO medico (codigo,nombre) values(?,?);";
 		try {
 			PreparedStatement pst = this.con.prepareStatement(query);
 			pst.setInt(1, Integer.parseInt(codigoMedico));
 			pst.setString(2, nombre);			
+			System.out.println("Valor: "+Integer.parseInt(codigoMedico));
+			System.out.println("Nombre: "+nombre);
 			pst.execute();
+			
 			System.out.println("Medico insertado");
+			
+			
+			
+			
+			
+			
 			if(!esp1.equals("")){
-				this.insertarEspecialidad(codigoMedico, esp1);
+				ComboBoxItem cbi1 = (ComboBoxItem)esp1;
+				this.insertarEspecialidad(codigoMedico, cbi1.getValue());
 			}
 			if(!esp2.equals("")){
-				this.insertarEspecialidad(codigoMedico, esp2);
+				ComboBoxItem cbi2 = (ComboBoxItem)esp2;
+				this.insertarEspecialidad(codigoMedico, cbi2.getValue());
 			}
 			if(!esp3.equals("")){
-				this.insertarEspecialidad(codigoMedico, esp3);
+				ComboBoxItem cbi3 = (ComboBoxItem)esp3;
+				this.insertarEspecialidad(codigoMedico, cbi3.getValue());
 			}
 				
 			this.close();
@@ -233,7 +242,7 @@ public class DBControlador
 					
 	}
 	
-	public ResultSet getEspecialides(){
+	public ResultSet getEspecialidades(){
 		this.conectar();
 		String query = "SELECT * FROM especialidad;";
 		try{
