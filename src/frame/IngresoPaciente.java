@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class IngresoPaciente extends JFrame {
 
@@ -48,6 +49,9 @@ public class IngresoPaciente extends JFrame {
 	 * Create the frame.
 	 */
 	public IngresoPaciente() {
+		
+		final DBControlador conector = new DBControlador();
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("CENTRO MEDICO LOS LAURELES");
 		setBounds(100, 100, 575, 294);
@@ -70,6 +74,8 @@ public class IngresoPaciente extends JFrame {
 		textFieldCodPaciente.setBounds(141, 50, 398, 20);
 		panel.add(textFieldCodPaciente);
 		textFieldCodPaciente.setColumns(10);
+		textFieldCodPaciente.setText(conector.getSiguientePaciente());
+		textFieldCodPaciente.disable();
 		
 		JLabel lblNombre = new JLabel("Nombre: ");
 		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -94,8 +100,9 @@ public class IngresoPaciente extends JFrame {
 		textFieldCodMed.setColumns(10);
 		
 		JLabel lblDatosDelPaciente = new JLabel("Datos del paciente");
-		lblDatosDelPaciente.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-		lblDatosDelPaciente.setBounds(141, 11, 170, 14);
+		lblDatosDelPaciente.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDatosDelPaciente.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblDatosDelPaciente.setBounds(295, 11, 244, 20);
 		panel.add(lblDatosDelPaciente);
 		
 		final JTextArea textAreaDiagnostico = new JTextArea();
@@ -105,17 +112,21 @@ public class IngresoPaciente extends JFrame {
 		
 		final JLabel lblResultado = new JLabel("");
 		lblResultado.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblResultado.setBounds(10, 216, 61, 14);
+		lblResultado.setBounds(10, 216, 161, 14);
 		panel.add(lblResultado);
 		
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DBControlador conector = new DBControlador();
-				conector.insertarPaciente(textFieldCodPaciente.getText(), textFieldNombre.getText(), textFieldCodMed.getText(),textAreaDiagnostico.getText());
-				lblResultado.setText("Grabado");
-				lblResultado.setForeground(Color.GREEN);
-				panel.dispose();
+				
+				if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText(), textFieldCodMed.getText(),textAreaDiagnostico.getText())){
+					lblResultado.setText("Grabado");
+					lblResultado.setForeground(Color.GREEN);
+				} else {
+					lblResultado.setText("Error grabando");
+					lblResultado.setForeground(Color.RED);
+				}
+				
 			}
 		});
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 11));

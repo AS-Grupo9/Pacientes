@@ -27,8 +27,10 @@ public class DBControlador
 	public void close(){    
 		try {
 	      this.con.close();
+	      System.out.println("Base de datos cerrada correctamente");
 	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	    	System.out.println("Error al cerrar la base de datos");
+	    	//System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
 	}
@@ -47,23 +49,51 @@ public class DBControlador
 	}
 	 */
 	
-	public void insertarPaciente(String codigoPaciente, String nombre, String codigoMedico, String diagnostico){
+	/**
+	 * PACIENTES
+	 * */
+	public boolean insertarPaciente(String codigoPaciente, String nombre, String codigoMedico, String diagnostico){
 		this.conectar();
 		String query = "INSERT INTO paciente (codigo,nombre,diagnostico) values(?,?,?);";
 		try {
 			PreparedStatement pst = this.con.prepareStatement(query);
 			pst.setInt(1, Integer.parseInt(codigoPaciente));
 			pst.setString(2, nombre);
-			//pst.setInt(3, Integer.parseInt(codigoMedico));
-			pst.setString(3, diagnostico);
-			
+			pst.setString(3, diagnostico);			
 			pst.execute();
+			System.out.println("Insercion correcta");
+			this.close();
+			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("Error al ejecutar la query: " + query);
+			//e.printStackTrace();
+			this.close();
+			return false;
 		}
 	}
 	
+	public void seleccionarDatosPaciente(String codigoPaciente){
+		this.conectar();
+		String query = "SELECT MAX(CODIGO) FROM ;";
+	}
 	
-		
+	public String getSiguientePaciente(){
+		String siguienteValor = null;
+		this.conectar();
+		String query = "SELECT MAX(CODIGO)+1 AS SIGUIENTE FROM PACIENTE;";
+		try{
+			PreparedStatement pst = this.con.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			if(rs.next()){
+				siguienteValor = rs.getString("SIGUIENTE");
+			}
+			this.close();
+			return siguienteValor;
+		} catch (Exception e){
+			System.out.println("Error al ejecutar la query: " + query);
+			//e.printStackTrace();
+			return "ERROR";
+		}
+	}
 }
 
