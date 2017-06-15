@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import db.DBControlador;
+import utilidades.ComboBoxItem;
 
 import javax.swing.JButton;
 import java.awt.GridLayout;
@@ -27,10 +28,8 @@ import javax.swing.JComboBox;
 public class IngresoDiagnostico extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textFieldCodPaciente;
-	private JTextField textFieldNombre;
 	private final JTextArea textAreaDiagnostico;
-	private final JComboBox comboBoxMedico ;
+	private final JComboBox comboBoxMedico,comboBoxPaciente ;
 	private final JLabel lblNombreMedico;
 	private int codigoMedico ;
 	
@@ -75,31 +74,12 @@ public class IngresoDiagnostico extends JFrame {
 		lblCdigoDelPaciente.setBounds(10, 53, 121, 14);
 		panel.add(lblCdigoDelPaciente);
 		
-		textFieldCodPaciente = new JTextField();
-		textFieldCodPaciente.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textFieldCodPaciente.setBounds(141, 50, 398, 20);
-		panel.add(textFieldCodPaciente);
-		textFieldCodPaciente.setColumns(10);
-		textFieldCodPaciente.setText(conector.getSiguientePaciente());
-		textFieldCodPaciente.disable();
-		
-		JLabel lblNombre = new JLabel("Nombre: ");
-		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNombre.setBounds(10, 78, 46, 14);
-		panel.add(lblNombre);
-		
-		textFieldNombre = new JTextField();
-		textFieldNombre.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textFieldNombre.setBounds(141, 75, 398, 20);
-		panel.add(textFieldNombre);
-		textFieldNombre.setColumns(10);
-		
 		JLabel lblCdigoDelMdico = new JLabel("C\u00F3digo del m\u00E9dico:");
 		lblCdigoDelMdico.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblCdigoDelMdico.setBounds(10, 109, 103, 14);
+		lblCdigoDelMdico.setBounds(10, 78, 103, 14);
 		panel.add(lblCdigoDelMdico);
 		
-		JLabel lblDatosDelPaciente = new JLabel("Datos del paciente");
+		JLabel lblDatosDelPaciente = new JLabel("Ingrese el diagn\u00F3stico");
 		lblDatosDelPaciente.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDatosDelPaciente.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblDatosDelPaciente.setBounds(295, 11, 244, 20);
@@ -107,7 +87,7 @@ public class IngresoDiagnostico extends JFrame {
 		
 		textAreaDiagnostico = new JTextArea();
 		textAreaDiagnostico.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textAreaDiagnostico.setBounds(141, 131, 398, 58);
+		textAreaDiagnostico.setBounds(141, 106, 398, 83);
 		panel.add(textAreaDiagnostico);
 		
 		final JLabel lblResultado = new JLabel("");
@@ -118,9 +98,15 @@ public class IngresoDiagnostico extends JFrame {
 		comboBoxMedico = new JComboBox();
 		
 		comboBoxMedico.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBoxMedico.setBounds(141, 106, 127, 20);
+		comboBoxMedico.setBounds(141, 75, 398, 20);
 		panel.add(comboBoxMedico);
 		
+		comboBoxPaciente = new JComboBox();
+		comboBoxPaciente.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		comboBoxPaciente.setBounds(141, 50, 398, 20);
+		panel.add(comboBoxPaciente);
+		
+		this.llenarPacientes();
 		this.llenarMedicos();
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -136,25 +122,17 @@ public class IngresoDiagnostico extends JFrame {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(textFieldNombre.getText() == null){
-					lblResultado.setText("Nombre no puede estar vacío");
-					lblResultado.setForeground(Color.RED);
-				} else if (textAreaDiagnostico.getText() == null){
-					lblResultado.setText("El diagnóstico no puede estar vacío");
-					lblResultado.setForeground(Color.RED);
+				if(conector.insertarDiagnostico(comboBoxMedico.getSelectedItem(), comboBoxPaciente.getSelectedItem(), textAreaDiagnostico.getText())){
+					lblResultado.setText("Grabado");
+					lblResultado.setForeground(Color.GREEN);
+					refrescarPacientes();
+					refrescarMedicos();
+					textAreaDiagnostico.setText("");
+					
 				} else {
-					if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText(), comboBoxMedico.getName(),textAreaDiagnostico.getText())){
-						lblResultado.setText("Grabado");
-						lblResultado.setForeground(Color.GREEN);
-						textFieldCodPaciente.setText(conector.getSiguientePaciente());
-						textFieldNombre.setText("");
-						textAreaDiagnostico.setText("");
-					} else {
-						lblResultado.setText("Error grabando");
-						lblResultado.setForeground(Color.RED);
-					}
+					lblResultado.setText("Error al grabar");
+					lblResultado.setForeground(Color.RED);
 				}
-			
 			}
 		});
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -163,25 +141,23 @@ public class IngresoDiagnostico extends JFrame {
 		
 		JLabel lblDiagnstico = new JLabel("Diagn\u00F3stico:");
 		lblDiagnstico.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblDiagnstico.setBounds(10, 133, 76, 14);
+		lblDiagnstico.setBounds(10, 108, 76, 14);
 		panel.add(lblDiagnstico);
 		
 		lblNombreMedico = new JLabel("");
 		lblNombreMedico.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNombreMedico.setBounds(285, 109, 244, 14);
 		panel.add(lblNombreMedico);
-		
-		
 
 	}
 	
 	private void llenarMedicos(){
 		ResultSet medicos = conector.getMedicos();
 		try {
+			
 			while(medicos.next()){
-				String codigo = medicos.getString("codigo");
-				String nombre = medicos.getString("nombre");				
-				this.comboBoxMedico.addItem(codigo);
+				ComboBoxItem item = new ComboBoxItem(medicos.getString("codigo"), "Dr. "+medicos.getString("nombre"));		
+				this.comboBoxMedico.addItem(item);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -189,4 +165,27 @@ public class IngresoDiagnostico extends JFrame {
 		}	
 	}
 	
+	private void llenarPacientes(){
+		ResultSet pacientes = conector.getPacientes();
+		try {
+			
+			while(pacientes.next()){
+				ComboBoxItem item = new ComboBoxItem(pacientes.getString("codigo"), pacientes.getString("nombre"));		
+				this.comboBoxPaciente.addItem(item);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("ERROR");
+		}	
+	}
+	
+	private void refrescarPacientes(){
+		this.comboBoxPaciente.removeAllItems();	
+		llenarPacientes();	
+	}
+	
+	private void refrescarMedicos(){
+		this.comboBoxMedico.removeAllItems();	
+		llenarMedicos();	
+	}
 }

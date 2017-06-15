@@ -97,6 +97,20 @@ public class DBControlador
 		}
 	}
 	
+	public ResultSet getPacientes(){
+		this.conectar();
+		String query = "SELECT * FROM paciente;";
+		try{
+			PreparedStatement pst = this.con.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			return rs;
+		} catch (Exception e){
+			System.out.println("Error al ejecutar la query: " + query);
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	/**
 	 * MEDICO 
 	 * 
@@ -158,16 +172,9 @@ public class DBControlador
 			PreparedStatement pst = this.con.prepareStatement(query);
 			pst.setInt(1, Integer.parseInt(codigoMedico));
 			pst.setString(2, nombre);			
-			System.out.println("Valor: "+Integer.parseInt(codigoMedico));
-			System.out.println("Nombre: "+nombre);
 			pst.execute();
 			
 			System.out.println("Medico insertado");
-			
-			
-			
-			
-			
 			
 			if(!esp1.equals("")){
 				ComboBoxItem cbi1 = (ComboBoxItem)esp1;
@@ -219,18 +226,19 @@ public class DBControlador
 	/**
 	 * DIAGNOSTICO
 	 * */
-	public boolean insertarDiagnostico(String codigoPaciente, String codigoMedico, String diagnostico){
+	public boolean insertarDiagnostico(Object p, Object m, String diagnostico){
 		this.conectar();
 		String query = "INSERT INTO atiende_a (medico,paciente,diagnostico) values(?,?,?);";
-		
-		
+	
+		ComboBoxItem medico = (ComboBoxItem) p;
+		ComboBoxItem paciente = (ComboBoxItem) m;
 		try{
 			PreparedStatement pst = this.con.prepareStatement(query);
-			pst.setInt(1, Integer.parseInt(codigoPaciente));
-			pst.setInt(2, Integer.parseInt(codigoMedico));
+			pst.setInt(1, Integer.parseInt(medico.getValue()));
+			pst.setInt(2, Integer.parseInt(paciente.getValue()));
 			pst.setString(3, diagnostico);			
 			pst.execute();
-			System.out.println("Insercion correcta en tabla Atiende A");
+			System.out.println("Diagnostico insertado");
 			this.close();
 			return true;
 		} catch (SQLException e) {
