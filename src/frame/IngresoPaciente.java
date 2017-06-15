@@ -18,17 +18,21 @@ import java.awt.Font;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
 
 public class IngresoPaciente extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldCodPaciente;
 	private JTextField textFieldNombre;
-	private JTextField textFieldCodMed;
-
+	private final JTextArea textAreaDiagnostico;
+	private final JComboBox comboBoxMedico ;
+	
+	private final DBControlador conector = new DBControlador();
 	/**
 	 * Launch the application.
 	 */
@@ -50,7 +54,7 @@ public class IngresoPaciente extends JFrame {
 	 */
 	public IngresoPaciente() {
 		
-		final DBControlador conector = new DBControlador();
+		
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("CENTRO MEDICO LOS LAURELES");
@@ -90,14 +94,8 @@ public class IngresoPaciente extends JFrame {
 		
 		JLabel lblCdigoDelMdico = new JLabel("C\u00F3digo del m\u00E9dico:");
 		lblCdigoDelMdico.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblCdigoDelMdico.setBounds(10, 103, 103, 14);
+		lblCdigoDelMdico.setBounds(10, 109, 103, 14);
 		panel.add(lblCdigoDelMdico);
-		
-		textFieldCodMed = new JTextField();
-		textFieldCodMed.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textFieldCodMed.setBounds(141, 100, 398, 20);
-		panel.add(textFieldCodMed);
-		textFieldCodMed.setColumns(10);
 		
 		JLabel lblDatosDelPaciente = new JLabel("Datos del paciente");
 		lblDatosDelPaciente.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -105,7 +103,7 @@ public class IngresoPaciente extends JFrame {
 		lblDatosDelPaciente.setBounds(295, 11, 244, 20);
 		panel.add(lblDatosDelPaciente);
 		
-		final JTextArea textAreaDiagnostico = new JTextArea();
+		textAreaDiagnostico = new JTextArea();
 		textAreaDiagnostico.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textAreaDiagnostico.setBounds(141, 131, 398, 58);
 		panel.add(textAreaDiagnostico);
@@ -115,13 +113,23 @@ public class IngresoPaciente extends JFrame {
 		lblResultado.setBounds(10, 216, 161, 14);
 		panel.add(lblResultado);
 		
+		comboBoxMedico = new JComboBox();
+		comboBoxMedico.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		comboBoxMedico.setBounds(141, 106, 398, 20);
+		panel.add(comboBoxMedico);
+		
+		this.llenarMedicos();	
+		
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText(), textFieldCodMed.getText(),textAreaDiagnostico.getText())){
+				if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText(), comboBoxMedico.getName(),textAreaDiagnostico.getText())){
 					lblResultado.setText("Grabado");
 					lblResultado.setForeground(Color.GREEN);
+					textFieldCodPaciente.setText("");
+					textFieldNombre.setText("");
+					textAreaDiagnostico.setText("");
 				} else {
 					lblResultado.setText("Error grabando");
 					lblResultado.setForeground(Color.RED);
@@ -134,6 +142,11 @@ public class IngresoPaciente extends JFrame {
 		panel.add(btnGuardar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
 		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnCancelar.setBounds(450, 216, 89, 23);
 		panel.add(btnCancelar);
@@ -145,11 +158,25 @@ public class IngresoPaciente extends JFrame {
 		
 		JLabel lblDiagnstico = new JLabel("Diagn\u00F3stico:");
 		lblDiagnstico.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblDiagnstico.setBounds(10, 128, 76, 14);
+		lblDiagnstico.setBounds(10, 133, 76, 14);
 		panel.add(lblDiagnstico);
-		
 		
 		
 
 	}
+	
+	private void llenarMedicos(){
+		ResultSet medicos = conector.getMedicos();
+		try {
+			while(medicos.next()){
+				String codigo = medicos.getString("codigo");
+				String nombre = medicos.getString("nombre");
+				this.comboBoxMedico.addItem(codigo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("ERROR");
+		}	
+	}
+	
 }
