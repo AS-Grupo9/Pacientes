@@ -133,8 +133,22 @@ public class DBControlador
 			return null;
 		}
 	}
-	
-	
+	/*
+	public String getNombreMedico(int idMedico){
+		this.conectar();
+		String query = "SELECT nombre FROM MEDICO where id=?;";
+		try{
+			PreparedStatement pst = this.con.prepareStatement(query);
+			pst.setInt(1,idMedico);
+			ResultSet rs = pst.executeQuery();
+			return rs.getString("nombre");			
+		} catch (Exception e){
+			System.out.println("Error al ejecutar la query: " + query);
+			e.printStackTrace();
+			return null;
+		}
+	}
+	*/
 	public boolean insertarMedico(String codigoPaciente, String nombre, String codigoMedico, String diagnostico){
 		this.conectar();
 		String query = "INSERT INTO paciente (codigo,nombre,diagnostico) values(?,?,?);";

@@ -31,6 +31,8 @@ public class IngresoPaciente extends JFrame {
 	private JTextField textFieldNombre;
 	private final JTextArea textAreaDiagnostico;
 	private final JComboBox comboBoxMedico ;
+	private final JLabel lblNombreMedico;
+	private int codigoMedico ;
 	
 	private final DBControlador conector = new DBControlador();
 	/**
@@ -114,8 +116,9 @@ public class IngresoPaciente extends JFrame {
 		panel.add(lblResultado);
 		
 		comboBoxMedico = new JComboBox();
+		
 		comboBoxMedico.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBoxMedico.setBounds(141, 106, 398, 20);
+		comboBoxMedico.setBounds(141, 106, 127, 20);
 		panel.add(comboBoxMedico);
 		
 		this.llenarMedicos();	
@@ -124,17 +127,25 @@ public class IngresoPaciente extends JFrame {
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText(), comboBoxMedico.getName(),textAreaDiagnostico.getText())){
-					lblResultado.setText("Grabado");
-					lblResultado.setForeground(Color.GREEN);
-					textFieldCodPaciente.setText("");
-					textFieldNombre.setText("");
-					textAreaDiagnostico.setText("");
-				} else {
-					lblResultado.setText("Error grabando");
+				if(textFieldNombre.getText() == null){
+					lblResultado.setText("Nombre no puede estar vacío");
 					lblResultado.setForeground(Color.RED);
+				} else if (textAreaDiagnostico.getText() == null){
+					lblResultado.setText("El diagnóstico no puede estar vacío");
+					lblResultado.setForeground(Color.RED);
+				} else {
+					if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText(), comboBoxMedico.getName(),textAreaDiagnostico.getText())){
+						lblResultado.setText("Grabado");
+						lblResultado.setForeground(Color.GREEN);
+						textFieldCodPaciente.setText(conector.getSiguientePaciente());
+						textFieldNombre.setText("");
+						textAreaDiagnostico.setText("");
+					} else {
+						lblResultado.setText("Error grabando");
+						lblResultado.setForeground(Color.RED);
+					}
 				}
-				
+
 			}
 		});
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -161,6 +172,11 @@ public class IngresoPaciente extends JFrame {
 		lblDiagnstico.setBounds(10, 133, 76, 14);
 		panel.add(lblDiagnstico);
 		
+		lblNombreMedico = new JLabel("");
+		lblNombreMedico.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNombreMedico.setBounds(285, 109, 244, 14);
+		panel.add(lblNombreMedico);
+		
 		
 
 	}
@@ -170,7 +186,7 @@ public class IngresoPaciente extends JFrame {
 		try {
 			while(medicos.next()){
 				String codigo = medicos.getString("codigo");
-				String nombre = medicos.getString("nombre");
+				String nombre = medicos.getString("nombre");				
 				this.comboBoxMedico.addItem(codigo);
 			}
 		} catch (SQLException e) {

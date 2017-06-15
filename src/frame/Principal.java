@@ -93,6 +93,7 @@ public class Principal extends JFrame {
 		JButton btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				dispose();
 			}
 		});
 		btnSalir.setBounds(10, 197, 404, 23);
