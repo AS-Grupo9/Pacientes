@@ -25,6 +25,9 @@ import javax.swing.UIManager;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 public class InformePacientePorMedico extends JFrame {
 
@@ -57,13 +60,14 @@ public class InformePacientePorMedico extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 589, 348);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel labelInforme = new JLabel("Informe de pacientes por m\u00E9dico");
 		labelInforme.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelInforme.setFont(new Font("Tahoma", Font.BOLD, 16));
+		labelInforme.setFont(new Font("Arial", Font.BOLD, 16));
 		labelInforme.setBounds(187, 11, 376, 20);
 		contentPane.add(labelInforme);
 		
@@ -106,6 +110,7 @@ public class InformePacientePorMedico extends JFrame {
 		comboBoxMedicos.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBoxMedicos.setBounds(80, 45, 415, 20);
 		contentPane.add(comboBoxMedicos);
+		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{labelInforme, buttonVolver, scrollPane, table, button, comboBoxMedicos, label}));
 		llenarMedicos();
 	}
 	

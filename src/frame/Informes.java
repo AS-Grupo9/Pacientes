@@ -95,7 +95,7 @@ public class Informes extends JFrame {
 		
 		JLabel lblInformes = new JLabel("Informes");
 		lblInformes.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblInformes.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblInformes.setFont(new Font("Arial", Font.BOLD, 16));
 		lblInformes.setBounds(10, 11, 407, 20);
 		panel.add(lblInformes);
 		

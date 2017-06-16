@@ -65,7 +65,7 @@ public class InformeEspecialidadPorMedico extends JFrame {
 		
 		JLabel labelInforme = new JLabel("Informe de especialidades por m\u00E9dico");
 		labelInforme.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelInforme.setFont(new Font("Tahoma", Font.BOLD, 16));
+		labelInforme.setFont(new Font("Arial", Font.BOLD, 16));
 		labelInforme.setBounds(187, 11, 376, 20);
 		contentPane.add(labelInforme);
 		

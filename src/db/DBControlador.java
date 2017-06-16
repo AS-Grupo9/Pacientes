@@ -22,15 +22,15 @@ public class DBControlador
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-	    System.out.println("Base de datos abierta correctamente");
+	    //System.out.println("Base de datos abierta correctamente");
 	}
 
 	public void close(){    
 		try {
-	      this.con.close();
+	     // this.con.close();
 	      System.out.println("Base de datos cerrada correctamente");
 	    } catch ( Exception e ) {
-	    	System.out.println("Error al cerrar la base de datos");
+	    	//System.out.println("Error al cerrar la base de datos");
 	    	//System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
@@ -66,7 +66,7 @@ public class DBControlador
 				this.close();
 				return true;
 			} catch (SQLException e) {
-				System.out.println("Error al ejecutar la query: " + query);
+			//	System.out.println("Error al ejecutar la query: " + query);
 				//e.printStackTrace();
 				this.close();
 				return false;
@@ -91,7 +91,7 @@ public class DBControlador
 			this.close();
 			return siguienteValor;
 		} catch (Exception e){
-			System.out.println("Error al ejecutar la query: " + query);
+			//System.out.println("Error al ejecutar la query: " + query);
 			//e.printStackTrace();
 			return "ERROR";
 		}
@@ -105,7 +105,7 @@ public class DBControlador
 			ResultSet rs = pst.executeQuery();
 			return rs;
 		} catch (Exception e){
-			System.out.println("Error al ejecutar la query: " + query);
+		//	System.out.println("Error al ejecutar la query: " + query);
 			e.printStackTrace();
 			return null;
 		}
@@ -129,7 +129,7 @@ public class DBControlador
 			this.close();
 			return siguienteValor;
 		} catch (Exception e){
-			System.out.println("Error al ejecutar la query: " + query);
+		//	System.out.println("Error al ejecutar la query: " + query);
 			//e.printStackTrace();
 			return "ERROR";
 		}
@@ -143,7 +143,7 @@ public class DBControlador
 			ResultSet rs = pst.executeQuery();
 			return rs;
 		} catch (Exception e){
-			System.out.println("Error al ejecutar la query: " + query);
+		//	System.out.println("Error al ejecutar la query: " + query);
 			e.printStackTrace();
 			return null;
 		}
@@ -174,7 +174,7 @@ public class DBControlador
 			pst.setString(2, nombre);			
 			pst.execute();
 			
-			System.out.println("Medico insertado");
+		//	System.out.println("Medico insertado");
 			
 			if(!esp1.equals("")){
 				ComboBoxItem cbi1 = (ComboBoxItem)esp1;
@@ -192,7 +192,7 @@ public class DBControlador
 			this.close();
 			return true;
 		} catch (SQLException e) {
-			System.out.println("Error al ejecutar la query: " + query);
+			//System.out.println("Error al ejecutar la query: " + query);
 			//e.printStackTrace();
 			this.close();
 			return false;
@@ -208,11 +208,11 @@ public class DBControlador
 				pst.setInt(1, Integer.parseInt(codigoMedico));
 				pst.setInt(2, Integer.parseInt(especialidad));
 				pst.execute();
-				System.out.println("Especialidad insertada");
+			//	System.out.println("Especialidad insertada");
 				this.close();
 				return true;
 			} catch (SQLException e) {
-				System.out.println("Error al ejecutar la query: " + query);
+			//	System.out.println("Error al ejecutar la query: " + query);
 				//e.printStackTrace();
 				this.close();
 				return false;
@@ -239,11 +239,11 @@ public class DBControlador
 			pst.setString(3, diagnostico);	
 			pst.setString(4, fecha);
 			pst.execute();
-			System.out.println("Diagnostico insertado");
+		//	System.out.println("Diagnostico insertado");
 			this.close();
 			return true;
 		} catch (SQLException e) {
-			System.out.println("Error al ejecutar la query: " + query);
+		//	System.out.println("Error al ejecutar la query: " + query);
 			//e.printStackTrace();
 			this.close();
 			return false;
@@ -259,7 +259,7 @@ public class DBControlador
 			ResultSet rs = pst.executeQuery();
 			return rs;
 		} catch (Exception e){
-			System.out.println("Error al ejecutar la query: " + query);
+		//	System.out.println("Error al ejecutar la query: " + query);
 			e.printStackTrace();
 			return null;
 		}
@@ -274,7 +274,7 @@ public class DBControlador
 			ResultSet rs = pst.executeQuery();
 			return rs;
 		} catch (Exception e){
-			System.out.println("Error al ejecutar la query: " + query);
+		//	System.out.println("Error al ejecutar la query: " + query);
 			e.printStackTrace();
 			return null;
 		}
@@ -289,7 +289,7 @@ public class DBControlador
 			ResultSet rs = pst.executeQuery();
 			return rs;
 		} catch (Exception e){
-			System.out.println("Error al ejecutar la query: " + query);
+		//	System.out.println("Error al ejecutar la query: " + query);
 			e.printStackTrace();
 			return null;
 		}
@@ -319,7 +319,7 @@ public class DBControlador
 			}
 				
 		} catch (Exception e){
-			System.out.println("Error al ejecutar la query: " + query);
+		//	System.out.println("Error al ejecutar la query: " + query);
 			e.printStackTrace();
 			return false;
 		}
