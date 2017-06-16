@@ -71,7 +71,9 @@ public class InformeEspecialidadPorMedico extends JFrame {
 		JButton buttonVolver = new JButton("Volver");
 		buttonVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
+				Informes inf = new Informes();
+				inf.setVisible(true);
+				dispose();	
 			}
 		});
 		buttonVolver.setFont(new Font("Tahoma", Font.PLAIN, 11));

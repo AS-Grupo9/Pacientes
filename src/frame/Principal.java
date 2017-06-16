@@ -83,6 +83,7 @@ public class Principal extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				Ingresos ing = new Ingresos();
 				ing.setVisible(true);
+				dispose();
 			}
 		});
 		btnIngresoDatos.setBounds(10, 129, 404, 23);
@@ -94,8 +95,11 @@ public class Principal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Informes inf = new Informes();
 				inf.setVisible(true);
+				dispose();
 			}
+			
 		});
+		
 		btnInformes.setBounds(10, 163, 404, 23);
 		panel.add(btnInformes);
 		

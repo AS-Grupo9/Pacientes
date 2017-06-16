@@ -78,6 +78,7 @@ public class Ingresos extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				IngresoPaciente ingPac = new IngresoPaciente();
 				ingPac.setVisible(true);
+				dispose();
 			}
 		});
 		btnIngresoDatos.setBounds(10, 98, 404, 23);
@@ -88,6 +89,7 @@ public class Ingresos extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				IngresoMedico ingMed = new IngresoMedico();
 				ingMed.setVisible(true);
+				dispose();
 			}
 		});
 		btnInformes.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -98,7 +100,9 @@ public class Ingresos extends JFrame {
 		btnSalir.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
+				Principal ppal = new Principal();
+				ppal.setVisible(true);
+				dispose();				
 			}
 		});
 		btnSalir.setBounds(10, 197, 404, 23);
@@ -115,6 +119,7 @@ public class Ingresos extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				IngresoDiagnostico ingDiag = new IngresoDiagnostico();
 				ingDiag.setVisible(true);
+				dispose();
 			}
 		});
 		btnIngresoDeSituacin.setFont(new Font("Tahoma", Font.PLAIN, 11));

@@ -77,6 +77,7 @@ public class Informes extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				InformePacientePorMedico infPacPorMed = new InformePacientePorMedico();
 				infPacPorMed.setVisible(true);
+				dispose();
 			}
 		});
 		btnIngresoDatos.setBounds(10, 129, 404, 23);
@@ -87,6 +88,7 @@ public class Informes extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				InformeEspecialidadPorMedico infEspPorMed = new InformeEspecialidadPorMedico();
 				infEspPorMed.setVisible(true);
+				dispose();
 			}
 		});
 		btnInformes.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -97,6 +99,8 @@ public class Informes extends JFrame {
 		btnSalir.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Principal ppal = new Principal();
+				ppal.setVisible(true);
 				dispose();
 			}
 		});

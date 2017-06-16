@@ -112,6 +112,8 @@ public class IngresoDiagnostico extends JFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Ingresos ing = new Ingresos();
+				ing.setVisible(true);
 				dispose();
 			}
 		});

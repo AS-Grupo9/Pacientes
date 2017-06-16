@@ -71,6 +71,8 @@ public class InformePacientePorMedico extends JFrame {
 		JButton buttonVolver = new JButton("Volver");
 		buttonVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Informes inf = new Informes();
+				inf.setVisible(true);
 				dispose();
 			}
 		});
