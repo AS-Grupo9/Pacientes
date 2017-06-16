@@ -267,7 +267,7 @@ public class DBControlador
 	
 	public ResultSet getPacientesPorMedico(){
 		this.conectar();
-		String query = "SELECT m.codigo, 'Dr. ' || m.nombre as medico, p.nombre as paciente FROM Medico m INNER JOIN Atiende_a a ON m.codigo = a.medico INNER JOIN Paciente p ON a.paciente = p.codigo order by m.codigo";
+		String query = "SELECT m.codigo, 'Dr. ' || m.nombre as medico, a.fecha, p.nombre as paciente FROM Medico m INNER JOIN Atiende_a a ON m.codigo = a.medico INNER JOIN Paciente p ON a.paciente = p.codigo order by m.codigo";
 		try{
 			PreparedStatement pst = this.con.prepareStatement(query);
 			ResultSet rs = pst.executeQuery();
