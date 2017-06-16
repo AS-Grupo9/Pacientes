@@ -226,17 +226,18 @@ public class DBControlador
 	/**
 	 * DIAGNOSTICO
 	 * */
-	public boolean insertarDiagnostico(Object p, Object m, String diagnostico){
+	public boolean insertarDiagnostico(Object p, Object m, String diagnostico, String fecha){
 		this.conectar();
-		String query = "INSERT INTO atiende_a (medico,paciente,diagnostico) values(?,?,?);";
-	
+		String query = "INSERT INTO atiende_a (medico,paciente,diagnostico,fecha) values(?,?,?,?);";
+		
 		ComboBoxItem medico = (ComboBoxItem) p;
 		ComboBoxItem paciente = (ComboBoxItem) m;
 		try{
 			PreparedStatement pst = this.con.prepareStatement(query);
 			pst.setInt(1, Integer.parseInt(medico.getValue()));
 			pst.setInt(2, Integer.parseInt(paciente.getValue()));
-			pst.setString(3, diagnostico);			
+			pst.setString(3, diagnostico);	
+			pst.setString(4, fecha);
 			pst.execute();
 			System.out.println("Diagnostico insertado");
 			this.close();
