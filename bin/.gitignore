@@ -1,5 +1,3 @@
-/db/
 /frame/
-/sqlite-jdbc-3.18.0.jar
-/util/
-/utilidades/
+/rs2xml.jar
+/db/

@@ -263,5 +263,33 @@ public class DBControlador
 			return null;
 		}
 	}
+	
+	public ResultSet getPacientesPorMedico(){
+		this.conectar();
+		String query = "SELECT m.codigo, 'Dr. ' || m.nombre as medico, p.nombre as paciente FROM Medico m INNER JOIN Atiende_a a ON m.codigo = a.medico INNER JOIN Paciente p ON a.paciente = p.codigo order by m.codigo";
+		try{
+			PreparedStatement pst = this.con.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			return rs;
+		} catch (Exception e){
+			System.out.println("Error al ejecutar la query: " + query);
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public ResultSet getEspecialidadesPorMedico(){
+		this.conectar();
+		String query = "SELECT m.codigo, 'Dr. ' || m.nombre as medico, e.nombre as especialidad FROM Medico m INNER JOIN se_especializa_en see ON m.codigo = see.medico INNER JOIN especialidad e ON e.codigo = see.especialidad order by m.codigo";
+		try{
+			PreparedStatement pst = this.con.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			return rs;
+		} catch (Exception e){
+			System.out.println("Error al ejecutar la query: " + query);
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
 
