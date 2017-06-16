@@ -73,24 +73,34 @@ public class Principal extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblElijaSuOpcin = new JLabel("Elija su opci\u00F3n...");
+		lblElijaSuOpcin.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblElijaSuOpcin.setBounds(173, 104, 113, 14);
 		panel.add(lblElijaSuOpcin);
 		
 		JButton btnIngresoDatos = new JButton("Ingreso de datos");
+		btnIngresoDatos.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnIngresoDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				IngresoDiagnostico ingDat = new IngresoDiagnostico();
-				ingDat.setVisible(true);
+				Ingresos ing = new Ingresos();
+				ing.setVisible(true);
 			}
 		});
 		btnIngresoDatos.setBounds(10, 129, 404, 23);
 		panel.add(btnIngresoDatos);
 		
 		JButton btnInformes = new JButton("Informes");
+		btnInformes.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnInformes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Informes inf = new Informes();
+				inf.setVisible(true);
+			}
+		});
 		btnInformes.setBounds(10, 163, 404, 23);
 		panel.add(btnInformes);
 		
 		JButton btnSalir = new JButton("Salir");
+		btnSalir.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
