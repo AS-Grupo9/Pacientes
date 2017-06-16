@@ -49,19 +49,12 @@ public class Informes extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("Nuevo");
-		mnNewMenu.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		menuBar.add(mnNewMenu);
-		
-		JMenuItem mntmPaciente = new JMenuItem("Paciente");
-		mntmPaciente.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		mnNewMenu.add(mntmPaciente);
-		
-		JMenuItem mntmMdico = new JMenuItem("M\u00E9dico");
-		mntmMdico.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		mnNewMenu.add(mntmMdico);
-		
 		JMenu mnNewMenu_1 = new JMenu("Salir");
+		mnNewMenu_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		mnNewMenu_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		menuBar.add(mnNewMenu_1);
 		contentPane = new JPanel();
