@@ -142,11 +142,18 @@ public class Splash extends JFrame {
 			lblResultado.setForeground(Color.RED);
 			return false;
 		}
-		if(!conector.validarUsuarioYPassword(usuario,password)){
-			lblResultado.setText("Usuario y/o contraseña inválidos");
+		if(!conector.validarUsuario(usuario)){
+			lblResultado.setText("Usuario inexistente");
 			lblResultado.setForeground(Color.RED);
 			return false;
 		}
+		String saltDB = conector.obtenerSalt(usuario);
+		String passDB = conector.obtenerPassword(usuario);
+	
+		if(!conector.get_SHA_512_SecurePassword(password, saltDB).equals(passDB)){
+			System.out.println("Valide el login");
+		}
+		
 		return true;
 	}
 }

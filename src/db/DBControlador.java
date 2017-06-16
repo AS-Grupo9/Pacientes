@@ -1,5 +1,8 @@
 package db;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -300,13 +303,12 @@ public class DBControlador
 	 * 
 	 * */
 	
-	public boolean validarUsuarioYPassword(String usuario, String password){
+	public boolean validarUsuario(String usuario){
 		this.conectar();
-		String query = "select count(*) as filas from usuario where codigo = ? and password = ?;";
+		String query = "select count(*) as filas from usuario where codigo = ? ;";
 		try{
 			PreparedStatement pst = this.con.prepareStatement(query);
 			pst.setString(1, usuario);
-			pst.setString(2, password);
 			ResultSet rs = pst.executeQuery();
 			
 			/*
@@ -325,5 +327,61 @@ public class DBControlador
 		}
 	}
 	
+	
+	public String obtenerSalt(String codigo){
+		this.conectar();
+		String query = "SELECT salt FROM usuario where codigo = ?;";
+		try{
+			PreparedStatement pst = this.con.prepareStatement(query);
+			pst.setString(1, codigo);	
+			ResultSet rs = pst.executeQuery();
+			if(rs.getString("salt") == null){
+				return null;
+			} else {
+				return rs.getString("salt");
+			}
+			
+			
+		} catch (Exception e){
+		//	System.out.println("Error al ejecutar la query: " + query);
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public String obtenerPassword(String codigo){
+		this.conectar();
+		String query = "SELECT password FROM usuario where codigo = ?;";
+		try{
+			PreparedStatement pst = this.con.prepareStatement(query);
+			pst.setString(1, codigo);	
+			ResultSet rs = pst.executeQuery();
+			return rs.getString("password");
+		} catch (Exception e){
+		//	System.out.println("Error al ejecutar la query: " + query);
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public String get_SHA_512_SecurePassword(String passwordToHash, String salt){
+    	String generatedPassword = null;
+    	    try {
+    	         MessageDigest md = MessageDigest.getInstance("SHA-512");
+    	         md.update(salt.getBytes("UTF-8"));
+    	         byte[] bytes = md.digest(passwordToHash.getBytes("UTF-8"));
+    	         StringBuilder sb = new StringBuilder();
+    	         for(int i=0; i< bytes.length ;i++){
+    	            sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+    	         }
+    	         generatedPassword = sb.toString();
+    	        } 
+    	       catch (NoSuchAlgorithmException e){
+    	        e.printStackTrace();
+    	       } catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+    	    return generatedPassword;
+    	}
 }
 
