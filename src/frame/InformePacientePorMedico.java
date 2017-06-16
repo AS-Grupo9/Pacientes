@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
+import java.awt.Toolkit;
 
 public class InformePacientePorMedico extends JFrame {
 
@@ -44,6 +45,7 @@ public class InformePacientePorMedico extends JFrame {
 			public void run() {
 				try {
 					InformePacientePorMedico frame = new InformePacientePorMedico();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,6 +58,7 @@ public class InformePacientePorMedico extends JFrame {
 	 * Create the frame.
 	 */
 	public InformePacientePorMedico() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(InformePacientePorMedico.class.getResource("/recursos/iconoBig.png")));
 		setTitle("CENTRO MEDICO LOS LAURELES");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 589, 348);
@@ -76,6 +79,7 @@ public class InformePacientePorMedico extends JFrame {
 		buttonVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Informes inf = new Informes();
+				inf.setLocationRelativeTo(null);
 				inf.setVisible(true);
 				dispose();
 			}

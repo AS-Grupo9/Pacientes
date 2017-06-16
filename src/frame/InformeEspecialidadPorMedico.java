@@ -26,6 +26,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class InformeEspecialidadPorMedico extends JFrame {
 
@@ -42,6 +43,7 @@ public class InformeEspecialidadPorMedico extends JFrame {
 			public void run() {
 				try {
 					InformeEspecialidadPorMedico frame = new InformeEspecialidadPorMedico();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,6 +56,7 @@ public class InformeEspecialidadPorMedico extends JFrame {
 	 * Create the frame.
 	 */
 	public InformeEspecialidadPorMedico() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(InformeEspecialidadPorMedico.class.getResource("/recursos/iconoBig.png")));
 		setTitle("CENTRO MEDICO LOS LAURELES");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 589, 348);
@@ -74,6 +77,7 @@ public class InformeEspecialidadPorMedico extends JFrame {
 		buttonVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Informes inf = new Informes();
+				inf.setLocationRelativeTo(null);
 				inf.setVisible(true);
 				dispose();	
 			}

@@ -28,7 +28,7 @@ public class DBControlador
 	public void close(){    
 		try {
 	     // this.con.close();
-	      System.out.println("Base de datos cerrada correctamente");
+	    //  System.out.println("Base de datos cerrada correctamente");
 	    } catch ( Exception e ) {
 	    	//System.out.println("Error al cerrar la base de datos");
 	    	//System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -62,7 +62,7 @@ public class DBControlador
 				pst.setInt(1, Integer.parseInt(codigoPaciente));
 				pst.setString(2, nombre);					
 				pst.execute();
-				System.out.println("Insercion correcta en tabla Paciente");
+			//	System.out.println("Insercion correcta en tabla Paciente");
 				this.close();
 				return true;
 			} catch (SQLException e) {

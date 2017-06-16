@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class Informes extends JFrame {
 
@@ -31,6 +32,7 @@ public class Informes extends JFrame {
 			public void run() {
 				try {
 					Informes frame = new Informes();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,6 +45,7 @@ public class Informes extends JFrame {
 	 * Create the frame.
 	 */
 	public Informes() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Informes.class.getResource("/recursos/iconoBig.png")));
 		setTitle("INFORMES - CENTRO MEDICO LOS LAURELES");
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,6 +65,7 @@ public class Informes extends JFrame {
 		btnIngresoDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				InformePacientePorMedico infPacPorMed = new InformePacientePorMedico();
+				infPacPorMed.setLocationRelativeTo(null);
 				infPacPorMed.setVisible(true);
 				dispose();
 			}
@@ -73,6 +77,7 @@ public class Informes extends JFrame {
 		btnInformes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				InformeEspecialidadPorMedico infEspPorMed = new InformeEspecialidadPorMedico();
+				infEspPorMed.setLocationRelativeTo(null);
 				infEspPorMed.setVisible(true);
 				dispose();
 			}
@@ -86,6 +91,7 @@ public class Informes extends JFrame {
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal ppal = new Principal();
+				ppal.setLocationRelativeTo(null);
 				ppal.setVisible(true);
 				dispose();
 			}

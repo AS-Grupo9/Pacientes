@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class Ingresos extends JFrame {
 
@@ -31,6 +32,7 @@ public class Ingresos extends JFrame {
 			public void run() {
 				try {
 					Ingresos frame = new Ingresos();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,6 +45,7 @@ public class Ingresos extends JFrame {
 	 * Create the frame.
 	 */
 	public Ingresos() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Ingresos.class.getResource("/recursos/iconoBig.png")));
 		setTitle("INGRESO - CENTRO MEDICO LOS LAURELES");
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,6 +65,7 @@ public class Ingresos extends JFrame {
 		btnIngresoDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				IngresoPaciente ingPac = new IngresoPaciente();
+				ingPac.setLocationRelativeTo(null);
 				ingPac.setVisible(true);
 				dispose();
 			}
@@ -73,6 +77,7 @@ public class Ingresos extends JFrame {
 		btnInformes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IngresoMedico ingMed = new IngresoMedico();
+				ingMed.setLocationRelativeTo(null);
 				ingMed.setVisible(true);
 				dispose();
 			}
@@ -86,6 +91,7 @@ public class Ingresos extends JFrame {
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal ppal = new Principal();
+				ppal.setLocationRelativeTo(null);
 				ppal.setVisible(true);
 				dispose();				
 			}
@@ -105,6 +111,7 @@ public class Ingresos extends JFrame {
 		btnIngresoDeSituacin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IngresoDiagnostico ingDiag = new IngresoDiagnostico();
+				ingDiag.setLocationRelativeTo(null);
 				ingDiag.setVisible(true);
 				dispose();
 			}

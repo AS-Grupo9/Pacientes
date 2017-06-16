@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+import java.awt.Toolkit;
 
 public class IngresoPaciente extends JFrame {
 
@@ -40,6 +41,7 @@ public class IngresoPaciente extends JFrame {
 			public void run() {
 				try {
 					IngresoPaciente frame = new IngresoPaciente();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,6 +54,7 @@ public class IngresoPaciente extends JFrame {
 	 * Create the frame.
 	 */
 	public IngresoPaciente() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(IngresoPaciente.class.getResource("/recursos/iconoBig.png")));
 		setBackground(Color.WHITE);
 		
 		
@@ -113,6 +116,7 @@ public class IngresoPaciente extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Ingresos ing = new Ingresos();
+				ing.setLocationRelativeTo(null);
 				ing.setVisible(true);
 				dispose();
 			}

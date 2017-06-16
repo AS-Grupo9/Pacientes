@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+import java.awt.Toolkit;
 
 public class IngresoMedico extends JFrame {
 
@@ -42,6 +43,7 @@ public class IngresoMedico extends JFrame {
 			public void run() {
 				try {
 					IngresoMedico frame = new IngresoMedico();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,6 +56,7 @@ public class IngresoMedico extends JFrame {
 	 * Create the frame.
 	 */
 	public IngresoMedico() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(IngresoMedico.class.getResource("/recursos/iconoBig.png")));
 		
 		
 		
@@ -133,6 +136,7 @@ public class IngresoMedico extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Ingresos ing = new Ingresos();
+				ing.setLocationRelativeTo(null);
 				ing.setVisible(true);
 				dispose();
 			}

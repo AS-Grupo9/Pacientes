@@ -28,6 +28,7 @@ import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
 
 import com.toedter.calendar.JDateChooser;
+import java.awt.Toolkit;
 
 
 public class IngresoDiagnostico extends JFrame {
@@ -49,6 +50,7 @@ public class IngresoDiagnostico extends JFrame {
 			public void run() {
 				try {
 					IngresoDiagnostico frame = new IngresoDiagnostico();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,6 +63,7 @@ public class IngresoDiagnostico extends JFrame {
 	 * Create the frame.
 	 */
 	public IngresoDiagnostico() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(IngresoDiagnostico.class.getResource("/recursos/iconoBig.png")));
 		
 		
 		
@@ -124,6 +127,7 @@ public class IngresoDiagnostico extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Ingresos ing = new Ingresos();
+				ing.setLocationRelativeTo(null);
 				ing.setVisible(true);
 				dispose();
 			}
@@ -159,9 +163,7 @@ public class IngresoDiagnostico extends JFrame {
 							lblResult.setForeground(Color.RED);
 						}
 					}
-				}
-				
-				
+				}	
 				
 			}
 		});
@@ -200,7 +202,7 @@ public class IngresoDiagnostico extends JFrame {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("ERROR");
+			//System.out.println("ERROR");
 		}	
 	}
 	

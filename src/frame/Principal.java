@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class Principal extends JFrame {
 
@@ -30,6 +31,7 @@ public class Principal extends JFrame {
 			public void run() {
 				try {
 					Principal frame = new Principal();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,6 +44,7 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/recursos/iconoBig.png")));
 		setTitle("CENTRO MEDICO LOS LAURELES");
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,6 +65,7 @@ public class Principal extends JFrame {
 		btnIngresoDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Ingresos ing = new Ingresos();
+				ing.setLocationRelativeTo(null);
 				ing.setVisible(true);
 				dispose();
 			}
@@ -74,6 +78,7 @@ public class Principal extends JFrame {
 		btnInformes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Informes inf = new Informes();
+				inf.setLocationRelativeTo(null);
 				inf.setVisible(true);
 				dispose();
 			}
@@ -88,6 +93,7 @@ public class Principal extends JFrame {
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Splash spl = new Splash();
+				spl.setLocationRelativeTo(null);
 				spl.setVisible(true);
 				dispose();
 			}

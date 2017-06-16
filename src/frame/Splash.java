@@ -23,6 +23,7 @@ import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
+import java.awt.Toolkit;
 
 public class Splash extends JFrame {
 
@@ -39,6 +40,7 @@ public class Splash extends JFrame {
 			public void run() {
 				try {
 					Splash frame = new Splash();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,10 +53,11 @@ public class Splash extends JFrame {
 	 * Create the frame.
 	 */
 	public Splash() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Splash.class.getResource("/recursos/iconoBig.png")));
 		setTitle("CENTRO MEDICO LOS LAURELES");
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 442, 409);
+		setBounds(100, 100, 603, 256);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -72,6 +75,7 @@ public class Splash extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(validarCampos(textFieldUsuario.getText(),passwordFieldPass.getText())){
 					Principal ppal = new Principal();
+					ppal.setLocationRelativeTo(null);
 					ppal.setVisible(true);
 					dispose();
 				} else {
@@ -81,7 +85,7 @@ public class Splash extends JFrame {
 				
 			}
 		});
-		btnIngresoDatos.setBounds(0, 293, 414, 23);
+		btnIngresoDatos.setBounds(256, 124, 311, 23);
 		panel.add(btnIngresoDatos);
 		
 		JButton btnSalir = new JButton("Salir");
@@ -91,38 +95,38 @@ public class Splash extends JFrame {
 				dispose();
 			}
 		});
-		btnSalir.setBounds(0, 327, 414, 23);
+		btnSalir.setBounds(256, 158, 311, 23);
 		panel.add(btnSalir);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(Splash.class.getResource("/recursos/logo.png")));
-		lblNewLabel.setBounds(102, 11, 232, 192);
+		lblNewLabel.setBounds(14, 11, 232, 192);
 		panel.add(lblNewLabel);
 		
 		textFieldUsuario = new JTextField();
 		textFieldUsuario.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textFieldUsuario.setBounds(205, 214, 129, 20);
+		textFieldUsuario.setBounds(345, 40, 222, 20);
 		panel.add(textFieldUsuario);
 		textFieldUsuario.setColumns(10);
 		
-		JLabel lblUsuario = new JLabel("Usuario:");
+		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblUsuario.setBounds(102, 217, 79, 14);
+		lblUsuario.setBounds(256, 43, 79, 14);
 		panel.add(lblUsuario);
 		
-		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
+		JLabel lblContrasea = new JLabel("Contrase\u00F1a");
 		lblContrasea.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblContrasea.setBounds(102, 239, 93, 14);
+		lblContrasea.setBounds(255, 74, 93, 14);
 		panel.add(lblContrasea);
 		
 		passwordFieldPass = new JPasswordField();
-		passwordFieldPass.setBounds(205, 236, 129, 20);
+		passwordFieldPass.setBounds(345, 71, 222, 20);
 		panel.add(passwordFieldPass);
 		
 		lblResultado = new JLabel("");
 		lblResultado.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblResultado.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResultado.setBounds(102, 268, 232, 14);
+		lblResultado.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblResultado.setBounds(335, 99, 232, 14);
 		panel.add(lblResultado);
 	}
 	
