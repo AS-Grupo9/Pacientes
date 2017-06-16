@@ -53,6 +53,7 @@ public class InformeEspecialidadPorMedico extends JFrame {
 	 * Create the frame.
 	 */
 	public InformeEspecialidadPorMedico() {
+		setTitle("CENTRO MEDICO LOS LAURELES");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 589, 348);
 		contentPane = new JPanel();
