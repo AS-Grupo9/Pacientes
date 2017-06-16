@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class Principal extends JFrame {
 
@@ -43,41 +45,19 @@ public class Principal extends JFrame {
 		setTitle("CENTRO MEDICO LOS LAURELES");
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		
-		JMenu mnNewMenu = new JMenu("Nuevo");
-		mnNewMenu.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		menuBar.add(mnNewMenu);
-		
-		JMenuItem mntmPaciente = new JMenuItem("Paciente");
-		mntmPaciente.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		mnNewMenu.add(mntmPaciente);
-		
-		JMenuItem mntmMdico = new JMenuItem("M\u00E9dico");
-		mntmMdico.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		mnNewMenu.add(mntmMdico);
-		
-		JMenu mnNewMenu_1 = new JMenu("Salir");
-		mnNewMenu_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		menuBar.add(mnNewMenu_1);
+		setBounds(100, 100, 442, 358);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblElijaSuOpcin = new JLabel("Elija su opci\u00F3n...");
-		lblElijaSuOpcin.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblElijaSuOpcin.setBounds(173, 104, 113, 14);
-		panel.add(lblElijaSuOpcin);
-		
 		JButton btnIngresoDatos = new JButton("Ingreso de datos");
+		btnIngresoDatos.setIcon(null);
 		btnIngresoDatos.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnIngresoDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -86,7 +66,7 @@ public class Principal extends JFrame {
 				dispose();
 			}
 		});
-		btnIngresoDatos.setBounds(10, 129, 404, 23);
+		btnIngresoDatos.setBounds(0, 215, 414, 23);
 		panel.add(btnIngresoDatos);
 		
 		JButton btnInformes = new JButton("Informes");
@@ -100,7 +80,7 @@ public class Principal extends JFrame {
 			
 		});
 		
-		btnInformes.setBounds(10, 163, 404, 23);
+		btnInformes.setBounds(0, 249, 414, 23);
 		panel.add(btnInformes);
 		
 		JButton btnSalir = new JButton("Salir");
@@ -110,7 +90,12 @@ public class Principal extends JFrame {
 				dispose();
 			}
 		});
-		btnSalir.setBounds(10, 197, 404, 23);
+		btnSalir.setBounds(0, 283, 414, 23);
 		panel.add(btnSalir);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(Principal.class.getResource("/recursos/logo.png")));
+		lblNewLabel.setBounds(102, 11, 232, 192);
+		panel.add(lblNewLabel);
 	}
 }

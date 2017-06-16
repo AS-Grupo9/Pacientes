@@ -12,10 +12,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import java.awt.Color;
 
 public class Ingresos extends JFrame {
 
@@ -44,33 +46,16 @@ public class Ingresos extends JFrame {
 		setTitle("INGRESO - CENTRO MEDICO LOS LAURELES");
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		
-		JMenu mnNewMenu_1 = new JMenu("Salir");
-		mnNewMenu_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		mnNewMenu_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		mnNewMenu_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		menuBar.add(mnNewMenu_1);
+		setBounds(100, 100, 458, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
-		JLabel lblElijaSuOpcin = new JLabel("Elija su opci\u00F3n...");
-		lblElijaSuOpcin.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblElijaSuOpcin.setBounds(171, 73, 113, 14);
-		panel.add(lblElijaSuOpcin);
 		
 		JButton btnIngresoDatos = new JButton("Ingreso de paciente");
 		btnIngresoDatos.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -81,7 +66,7 @@ public class Ingresos extends JFrame {
 				dispose();
 			}
 		});
-		btnIngresoDatos.setBounds(10, 98, 404, 23);
+		btnIngresoDatos.setBounds(10, 214,414, 23);
 		panel.add(btnIngresoDatos);
 		
 		JButton btnInformes = new JButton("Ingreso de m\u00E9dico");
@@ -93,7 +78,7 @@ public class Ingresos extends JFrame {
 			}
 		});
 		btnInformes.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnInformes.setBounds(10, 163, 404, 23);
+		btnInformes.setBounds(10, 283, 414, 23);
 		panel.add(btnInformes);
 		
 		JButton btnSalir = new JButton("Volver");
@@ -105,13 +90,15 @@ public class Ingresos extends JFrame {
 				dispose();				
 			}
 		});
-		btnSalir.setBounds(10, 197, 404, 23);
+		btnSalir.setBounds(10, 317, 414, 23);
 		panel.add(btnSalir);
 		
 		JLabel lblIngresos = new JLabel("Ingresos");
-		lblIngresos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIngresos.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblIngresos.setBounds(10, 11, 407, 20);
+		lblIngresos.setForeground(new Color(0, 0, 51));
+		lblIngresos.setBackground(Color.WHITE);
+		lblIngresos.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblIngresos.setFont(new Font("Arial", Font.BOLD, 16));
+		lblIngresos.setBounds(10, 11, 414, 20);
 		panel.add(lblIngresos);
 		
 		JButton btnIngresoDeSituacin = new JButton("Ingreso de situaci\u00F3n de paciente");
@@ -123,7 +110,12 @@ public class Ingresos extends JFrame {
 			}
 		});
 		btnIngresoDeSituacin.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnIngresoDeSituacin.setBounds(10, 129, 404, 23);
+		btnIngresoDeSituacin.setBounds(10, 249, 414, 23);
 		panel.add(btnIngresoDeSituacin);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(Principal.class.getResource("/recursos/logo.png")));
+		lblNewLabel.setBounds(102, 11, 232, 192);
+		panel.add(lblNewLabel);
 	}
 }

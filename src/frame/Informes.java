@@ -12,10 +12,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import java.awt.Color;
 
 public class Informes extends JFrame {
 
@@ -44,32 +46,16 @@ public class Informes extends JFrame {
 		setTitle("INFORMES - CENTRO MEDICO LOS LAURELES");
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		
-		JMenu mnNewMenu_1 = new JMenu("Salir");
-		mnNewMenu_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		mnNewMenu_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		menuBar.add(mnNewMenu_1);
+		setBounds(100, 100, 458, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
-		JLabel lblElijaSuOpcin = new JLabel("Elija su opci\u00F3n...");
-		lblElijaSuOpcin.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblElijaSuOpcin.setBounds(173, 104, 113, 14);
-		panel.add(lblElijaSuOpcin);
 		
 		JButton btnIngresoDatos = new JButton("Pacientes por m\u00E9dico");
 		btnIngresoDatos.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -80,7 +66,7 @@ public class Informes extends JFrame {
 				dispose();
 			}
 		});
-		btnIngresoDatos.setBounds(10, 129, 404, 23);
+		btnIngresoDatos.setBounds(10, 249, 412, 23);
 		panel.add(btnIngresoDatos);
 		
 		JButton btnInformes = new JButton("Especialidades por m\u00E9dico");
@@ -92,7 +78,7 @@ public class Informes extends JFrame {
 			}
 		});
 		btnInformes.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnInformes.setBounds(10, 163, 404, 23);
+		btnInformes.setBounds(10, 283, 412, 23);
 		panel.add(btnInformes);
 		
 		JButton btnSalir = new JButton("Volver");
@@ -104,13 +90,18 @@ public class Informes extends JFrame {
 				dispose();
 			}
 		});
-		btnSalir.setBounds(10, 197, 404, 23);
+		btnSalir.setBounds(10, 317, 412, 23);
 		panel.add(btnSalir);
 		
 		JLabel lblInformes = new JLabel("Informes");
-		lblInformes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInformes.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblInformes.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblInformes.setBounds(10, 11, 407, 20);
 		panel.add(lblInformes);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(Principal.class.getResource("/recursos/logo.png")));
+		lblNewLabel.setBounds(102, 11, 232, 192);
+		panel.add(lblNewLabel);
 	}
 }

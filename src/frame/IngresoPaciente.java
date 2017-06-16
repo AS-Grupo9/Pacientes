@@ -52,11 +52,12 @@ public class IngresoPaciente extends JFrame {
 	 * Create the frame.
 	 */
 	public IngresoPaciente() {
+		setBackground(Color.WHITE);
 		
 		
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setTitle("CENTRO MEDICO LOS LAURELES");
+		setTitle("INGRESO PACIENTE - CENTRO MEDICO LOS LAURELES");
 		setBounds(100, 100, 575, 210);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -64,6 +65,7 @@ public class IngresoPaciente extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
@@ -93,7 +95,7 @@ public class IngresoPaciente extends JFrame {
 		
 		JLabel lblDatosDelPaciente = new JLabel("Datos del paciente");
 		lblDatosDelPaciente.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDatosDelPaciente.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblDatosDelPaciente.setFont(new Font("Arial", Font.BOLD, 16));
 		lblDatosDelPaciente.setBounds(295, 11, 244, 20);
 		panel.add(lblDatosDelPaciente);
 		
@@ -104,7 +106,7 @@ public class IngresoPaciente extends JFrame {
 		
 		final JLabel lblResultadoQuery = new JLabel("");
 		lblResultadoQuery.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblResultadoQuery.setBounds(10, 138, 46, 14);
+		lblResultadoQuery.setBounds(10, 138, 161, 14);
 		panel.add(lblResultadoQuery);
 		
 		JButton btnCancelar = new JButton("Cancelar");

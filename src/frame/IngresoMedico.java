@@ -58,7 +58,7 @@ public class IngresoMedico extends JFrame {
 		
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setTitle("CENTRO MEDICO LOS LAURELES");
+		setTitle("INGRESO M\u00C9DICO - CENTRO MEDICO LOS LAURELES");
 		setBounds(100, 100, 575, 308);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -66,6 +66,7 @@ public class IngresoMedico extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
@@ -95,7 +96,7 @@ public class IngresoMedico extends JFrame {
 		
 		JLabel lblDatosDelMedico = new JLabel("Datos del m\u00E9dico");
 		lblDatosDelMedico.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDatosDelMedico.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblDatosDelMedico.setFont(new Font("Arial", Font.BOLD, 16));
 		lblDatosDelMedico.setBounds(295, 11, 244, 20);
 		panel.add(lblDatosDelMedico);
 		
