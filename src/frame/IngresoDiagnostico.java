@@ -78,12 +78,12 @@ public class IngresoDiagnostico extends JFrame {
 		panel.setLayout(null);
 		
 		
-		JLabel lblCdigoDelPaciente = new JLabel("C\u00F3digo del paciente:");
+		JLabel lblCdigoDelPaciente = new JLabel("Paciente:");
 		lblCdigoDelPaciente.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblCdigoDelPaciente.setBounds(10, 106, 121, 14);
 		panel.add(lblCdigoDelPaciente);
 		
-		JLabel lblCdigoDelMdico = new JLabel("C\u00F3digo del m\u00E9dico:");
+		JLabel lblCdigoDelMdico = new JLabel("M\u00E9dico:");
 		lblCdigoDelMdico.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblCdigoDelMdico.setBounds(10, 136, 103, 14);
 		panel.add(lblCdigoDelMdico);

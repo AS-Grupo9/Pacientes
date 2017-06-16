@@ -265,11 +265,12 @@ public class DBControlador
 		}
 	}
 	
-	public ResultSet getPacientesPorMedico(){
+	public ResultSet getPacientesPorMedico(String codigoMedico){
 		this.conectar();
-		String query = "SELECT m.codigo, 'Dr. ' || m.nombre as medico, a.fecha, p.nombre as paciente FROM Medico m INNER JOIN Atiende_a a ON m.codigo = a.medico INNER JOIN Paciente p ON a.paciente = p.codigo order by m.codigo";
+		String query = "SELECT p.codigo, p.nombre as paciente,a.fecha,a.diagnostico FROM Medico m INNER JOIN Atiende_a a ON m.codigo = a.medico INNER JOIN Paciente p ON a.paciente = p.codigo WHERE m.codigo = ? order by m.codigo";
 		try{
 			PreparedStatement pst = this.con.prepareStatement(query);
+			pst.setInt(1, Integer.parseInt(codigoMedico));
 			ResultSet rs = pst.executeQuery();
 			return rs;
 		} catch (Exception e){
@@ -279,11 +280,12 @@ public class DBControlador
 		}
 	}
 	
-	public ResultSet getEspecialidadesPorMedico(){
+	public ResultSet getEspecialidadesPorMedico(String codigoMedico){
 		this.conectar();
-		String query = "SELECT m.codigo, 'Dr. ' || m.nombre as medico, e.nombre as especialidad FROM Medico m INNER JOIN se_especializa_en see ON m.codigo = see.medico INNER JOIN especialidad e ON e.codigo = see.especialidad order by m.codigo";
+		String query = "SELECT e.codigo, e.nombre as especialidad FROM  se_especializa_en s INNER JOIN especialidad e ON e.codigo = s.especialidad WHERE s.medico = ? order by s.medico";
 		try{
 			PreparedStatement pst = this.con.prepareStatement(query);
+			pst.setInt(1, Integer.parseInt(codigoMedico));
 			ResultSet rs = pst.executeQuery();
 			return rs;
 		} catch (Exception e){
@@ -292,5 +294,36 @@ public class DBControlador
 			return null;
 		}
 	}
+	
+	/**
+	 * USUARIOS
+	 * 
+	 * */
+	
+	public boolean validarUsuarioYPassword(String usuario, String password){
+		this.conectar();
+		String query = "select count(*) as filas from usuario where codigo = ? and password = ?;";
+		try{
+			PreparedStatement pst = this.con.prepareStatement(query);
+			pst.setString(1, usuario);
+			pst.setString(2, password);
+			ResultSet rs = pst.executeQuery();
+			
+			/*
+			 * Si la cantidad de filas es > 0 es porque hay coincidencia
+			 * */
+			if(Integer.parseInt(rs.getString("filas"))>0){
+				return true;
+			} else {
+				return false;
+			}
+				
+		} catch (Exception e){
+			System.out.println("Error al ejecutar la query: " + query);
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 }
 

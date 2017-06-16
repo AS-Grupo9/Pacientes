@@ -87,6 +87,8 @@ public class Principal extends JFrame {
 		btnSalir.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Splash spl = new Splash();
+				spl.setVisible(true);
 				dispose();
 			}
 		});

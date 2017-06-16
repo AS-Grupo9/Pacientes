@@ -32,7 +32,7 @@ public class InformePacientePorMedico extends JFrame {
 	private final DBControlador conector = new DBControlador();
 	private String[] cabecera = {"Código","Médico","Paciente"};
 	private JTable table;
-	
+	private JComboBox comboBoxMedicos;
 	/**
 	 * Launch the application.
 	 */
@@ -81,19 +81,53 @@ public class InformePacientePorMedico extends JFrame {
 		contentPane.add(buttonVolver);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 42, 553, 219);
+		scrollPane.setBounds(10, 70, 553, 191);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		llenarTabla();
+		
+		JButton button = new JButton("Ver");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				llenarTabla(comboBoxMedicos.getSelectedItem());
+			}
+		});
+		button.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		button.setBounds(505, 42, 58, 23);
+		contentPane.add(button);
+		
+		JLabel label = new JLabel("M\u00E9dico:");
+		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label.setBounds(10, 48, 121, 14);
+		contentPane.add(label);
+		
+		comboBoxMedicos = new JComboBox();
+		comboBoxMedicos.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		comboBoxMedicos.setBounds(80, 45, 415, 20);
+		contentPane.add(comboBoxMedicos);
+		llenarMedicos();
 	}
 	
 	
-	private void llenarTabla(){
-		
-		ResultSet linea = conector.getPacientesPorMedico();
+	private void llenarTabla(Object m){
+		ComboBoxItem medico = (ComboBoxItem) m;
+		ResultSet linea = conector.getPacientesPorMedico(medico.getValue());
 		table.setModel(DbUtils.resultSetToTableModel(linea));
 		
+	}
+	
+	private void llenarMedicos(){
+		ResultSet medicos = conector.getMedicos();
+		try {
+			
+			while(medicos.next()){
+				ComboBoxItem item = new ComboBoxItem(medicos.getString("codigo"), "Dr. "+medicos.getString("nombre"));		
+				this.comboBoxMedicos.addItem(item);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("ERROR");
+		}	
 	}
 }

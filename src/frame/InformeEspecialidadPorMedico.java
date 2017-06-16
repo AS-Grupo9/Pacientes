@@ -25,6 +25,7 @@ import javax.swing.UIManager;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class InformeEspecialidadPorMedico extends JFrame {
 
@@ -32,7 +33,7 @@ public class InformeEspecialidadPorMedico extends JFrame {
 	private final DBControlador conector = new DBControlador();
 	private String[] cabecera = {"Código","Médico","Paciente"};
 	private JTable table;
-	
+	private JComboBox comboBoxMedicos;
 	/**
 	 * Launch the application.
 	 */
@@ -57,6 +58,7 @@ public class InformeEspecialidadPorMedico extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 589, 348);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -81,19 +83,55 @@ public class InformeEspecialidadPorMedico extends JFrame {
 		contentPane.add(buttonVolver);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 42, 553, 219);
+		scrollPane.setBounds(10, 71, 553, 190);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		llenarTabla();
+		
+		JLabel label = new JLabel("M\u00E9dico:");
+		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label.setBounds(10, 43, 121, 14);
+		contentPane.add(label);
+		
+		comboBoxMedicos = new JComboBox();
+		comboBoxMedicos.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		comboBoxMedicos.setBounds(80, 40, 415, 20);
+		contentPane.add(comboBoxMedicos);
+		
+		JButton btnVer = new JButton("Ver");
+		btnVer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				llenarTabla(comboBoxMedicos.getSelectedItem());
+			}
+		});
+		btnVer.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnVer.setBounds(505, 37, 58, 23);
+		contentPane.add(btnVer);
+		llenarMedicos();
+		//llenarTabla();
+		
 	}
 	
 	
-	private void llenarTabla(){
-		
-		ResultSet linea = conector.getEspecialidadesPorMedico();
+	private void llenarTabla(Object m){
+		ComboBoxItem medico = (ComboBoxItem) m;
+		ResultSet linea = conector.getEspecialidadesPorMedico(medico.getValue());
 		table.setModel(DbUtils.resultSetToTableModel(linea));
 		
+	}
+	
+	private void llenarMedicos(){
+		ResultSet medicos = conector.getMedicos();
+		try {
+			
+			while(medicos.next()){
+				ComboBoxItem item = new ComboBoxItem(medicos.getString("codigo"), "Dr. "+medicos.getString("nombre"));		
+				this.comboBoxMedicos.addItem(item);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("ERROR");
+		}	
 	}
 }
