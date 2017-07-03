@@ -151,7 +151,9 @@ public class Splash extends JFrame {
 		String passDB = conector.obtenerPassword(usuario);
 	
 		if(!conector.get_SHA_512_SecurePassword(password, saltDB).equals(passDB)){
-			System.out.println("Valide el login");
+			lblResultado.setText("Contraseña incorrecta");
+			lblResultado.setForeground(Color.RED);
+			return false;
 		}
 		
 		return true;

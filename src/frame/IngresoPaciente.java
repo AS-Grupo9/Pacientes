@@ -136,7 +136,7 @@ public class IngresoPaciente extends JFrame {
 						textFieldNombre.setText("");						
 					} else {
 						lblResultadoQuery.setText("Error al grabar");
-						lblResultado.setForeground(Color.RED);
+						lblResultadoQuery.setForeground(Color.RED);
 					}
 				
 			

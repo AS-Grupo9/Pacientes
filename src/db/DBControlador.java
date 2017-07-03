@@ -22,19 +22,19 @@ public class DBControlador
 	      Class.forName("org.sqlite.JDBC");
 	      this.con = DriverManager.getConnection("jdbc:sqlite:laureles.db");
 	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	   //   System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-	    //System.out.println("Base de datos abierta correctamente");
+	  //  System.out.println("Base de datos abierta correctamente");
 	}
 
 	public void close(){    
 		try {
-	     // this.con.close();
-	    //  System.out.println("Base de datos cerrada correctamente");
+	      this.con.close();
+	      System.out.println("Base de datos cerrada correctamente");
 	    } catch ( Exception e ) {
-	    	//System.out.println("Error al cerrar la base de datos");
-	    	//System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	    //	System.out.println("Error al cerrar la base de datos");
+	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
 	}
@@ -59,28 +59,26 @@ public class DBControlador
 	public boolean insertarPaciente(String codigoPaciente, String nombre){
 		this.conectar();
 		String query = "INSERT INTO paciente (codigo,nombre) values(?,?);";
-		
+		System.out.println(codigoPaciente);
+		System.out.println(nombre);
 		try{
 				PreparedStatement pst = this.con.prepareStatement(query);
 				pst.setInt(1, Integer.parseInt(codigoPaciente));
 				pst.setString(2, nombre);					
 				pst.execute();
-			//	System.out.println("Insercion correcta en tabla Paciente");
 				this.close();
+			//	System.out.println("Insercion correcta en tabla Paciente");
+				
 				return true;
 			} catch (SQLException e) {
 			//	System.out.println("Error al ejecutar la query: " + query);
-				//e.printStackTrace();
+				e.printStackTrace();
 				this.close();
 				return false;
 			}	
 	}
 	
-	public void seleccionarDatosPaciente(String codigoPaciente){
-		this.conectar();
-		String query = "SELECT MAX(CODIGO) FROM ;";
-	}
-	
+
 	public String getSiguientePaciente(){
 		String siguienteValor = null;
 		this.conectar();
@@ -96,6 +94,7 @@ public class DBControlador
 		} catch (Exception e){
 			//System.out.println("Error al ejecutar la query: " + query);
 			//e.printStackTrace();
+			this.close();
 			return "ERROR";
 		}
 	}
@@ -110,6 +109,7 @@ public class DBControlador
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
 			e.printStackTrace();
+			
 			return null;
 		}
 	}
@@ -134,6 +134,7 @@ public class DBControlador
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
 			//e.printStackTrace();
+			this.close();
 			return "ERROR";
 		}
 	}
@@ -260,6 +261,7 @@ public class DBControlador
 		try{
 			PreparedStatement pst = this.con.prepareStatement(query);
 			ResultSet rs = pst.executeQuery();
+			
 			return rs;
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
@@ -285,7 +287,7 @@ public class DBControlador
 	
 	public ResultSet getEspecialidadesPorMedico(String codigoMedico){
 		this.conectar();
-		String query = "SELECT e.codigo, e.nombre as especialidad FROM  se_especializa_en s INNER JOIN especialidad e ON e.codigo = s.especialidad WHERE s.medico = ? order by s.medico";
+		String query = "SELECT e.codigo, e.nombre as especialidad FROM se_especializa_en s INNER JOIN especialidad e ON e.codigo = s.especialidad WHERE s.medico = ? order by s.medico";
 		try{
 			PreparedStatement pst = this.con.prepareStatement(query);
 			pst.setInt(1, Integer.parseInt(codigoMedico));
@@ -314,15 +316,20 @@ public class DBControlador
 			/*
 			 * Si la cantidad de filas es > 0 es porque hay coincidencia
 			 * */
-			if(Integer.parseInt(rs.getString("filas"))>0){
+			int cantidad = Integer.parseInt(rs.getString("filas"));
+			this.close();
+			if(cantidad > 0){
+				
 				return true;
 			} else {
+				
 				return false;
 			}
 				
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
 			e.printStackTrace();
+			
 			return false;
 		}
 	}
@@ -335,16 +342,20 @@ public class DBControlador
 			PreparedStatement pst = this.con.prepareStatement(query);
 			pst.setString(1, codigo);	
 			ResultSet rs = pst.executeQuery();
-			if(rs.getString("salt") == null){
+			String salt = rs.getString("salt");
+			this.close();
+			
+			if(salt == null){		
 				return null;
 			} else {
-				return rs.getString("salt");
+				return salt;
 			}
 			
 			
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
 			e.printStackTrace();
+			this.close();
 			return null;
 		}
 	}
@@ -356,10 +367,13 @@ public class DBControlador
 			PreparedStatement pst = this.con.prepareStatement(query);
 			pst.setString(1, codigo);	
 			ResultSet rs = pst.executeQuery();
-			return rs.getString("password");
+			String password = rs.getString("password");
+			this.close();
+			return password;
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
 			e.printStackTrace();
+			this.close();
 			return null;
 		}
 	}
