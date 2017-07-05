@@ -48,7 +48,7 @@ public class Principal extends JFrame {
 		setTitle("CENTRO MEDICO LOS LAURELES");
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 442, 358);
+		setBounds(100, 100, 442, 357);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

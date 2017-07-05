@@ -49,7 +49,7 @@ public class Ingresos extends JFrame {
 		setTitle("INGRESO - CENTRO MEDICO LOS LAURELES");
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 458, 400);
+		setBounds(100, 100, 458, 434);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -96,7 +96,7 @@ public class Ingresos extends JFrame {
 				dispose();				
 			}
 		});
-		btnSalir.setBounds(10, 317, 414, 23);
+		btnSalir.setBounds(10, 351, 414, 23);
 		panel.add(btnSalir);
 		
 		JLabel lblIngresos = new JLabel("Ingresos");
@@ -124,5 +124,18 @@ public class Ingresos extends JFrame {
 		lblNewLabel.setIcon(new ImageIcon(Principal.class.getResource("/recursos/logo.png")));
 		lblNewLabel.setBounds(102, 11, 232, 192);
 		panel.add(lblNewLabel);
+		
+		JButton button = new JButton("Ingreso de usuario");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				IngresoUsuario ingUser = new IngresoUsuario();
+				ingUser.setLocationRelativeTo(null);
+				ingUser.setVisible(true);
+				dispose();
+			}
+		});
+		button.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		button.setBounds(10, 317, 414, 23);
+		panel.add(button);
 	}
 }
