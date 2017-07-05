@@ -397,5 +397,29 @@ public class DBControlador
 			}
     	    return generatedPassword;
     	}
+	
+	public boolean insertarUsuario(String codigo, String nombre, String pass){
+		this.conectar();
+
+		String salt = "oijsdljaslkj33";
+		String nuevoPass = this.get_SHA_512_SecurePassword(pass, salt);
+		String query = "INSERT INTO usuario (codigo,nombre,password,salt) values(?,?,?,?);";
+		try {
+			PreparedStatement pst = this.con.prepareStatement(query);
+			pst.setString(1, codigo);
+			pst.setString(2, nombre);
+			pst.setString(3, nuevoPass);
+			pst.setString(4, salt);
+			pst.execute();
+						
+			this.close();
+			return true;
+		} catch (SQLException e) {
+			//System.out.println("Error al ejecutar la query: " + query);
+			//e.printStackTrace();
+			this.close();
+			return false;
+		}
+	}
 }
 
