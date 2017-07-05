@@ -32,16 +32,16 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\MAURO\Documents\GitHub\Pacientes\Pacientes.jar"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\MAURO\Documents\GitHub\Pacientes\Laureles.jar"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\MAURO\Documents\GitHub\Pacientes\src\dist\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Users\MAURO\Documents\GitHub\Pacientes\laureles.db"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\Laureles"; Filename: "{app}\Pacientes.jar"
+Name: "{group}\Laureles"; Filename: "{app}\Laureles.jar"
 Name: "{group}\{cm:UninstallProgram,Laureles}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\Laureles"; Filename: "{app}\Pacientes.jar"; Tasks: desktopicon
+Name: "{commondesktop}\Laureles"; Filename: "{app}\Laureles.jar"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\Pacientes.jar"; Description: "{cm:LaunchProgram,Laureles}"; Flags: shellexec postinstall skipifsilent
+Filename: "{app}\Laureles.jar"; Description: "{cm:LaunchProgram,Laureles}"; Flags: shellexec postinstall skipifsilent
 

@@ -133,8 +133,10 @@ public class IngresoUsuario extends JFrame {
 					if(conector.insertarUsuario(textFieldCodUsuario.getText(),textFieldNombre.getText(),passwordFieldA.getText())){
 						lblResultado.setText("Grabado");
 						lblResultado.setForeground(Color.GREEN);
-						textFieldCodUsuario.setText(conector.getSiguientePaciente());
-						textFieldNombre.setText("");						
+						textFieldCodUsuario.setText("");
+						textFieldNombre.setText("");		
+						passwordFieldA.setText("");
+						passwordFieldB.setText("");
 					} else {
 						lblResultado.setText("Error al grabar");
 						lblResultado.setForeground(Color.RED);
