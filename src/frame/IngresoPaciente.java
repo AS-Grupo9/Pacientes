@@ -109,7 +109,7 @@ public class IngresoPaciente extends JFrame {
 		
 		final JLabel lblResultadoQuery = new JLabel("");
 		lblResultadoQuery.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblResultadoQuery.setBounds(10, 138, 161, 14);
+		lblResultadoQuery.setBounds(10, 138, 325, 14);
 		panel.add(lblResultadoQuery);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -129,17 +129,20 @@ public class IngresoPaciente extends JFrame {
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-					if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText())){
-						lblResultadoQuery.setText("Grabado");
-						lblResultadoQuery.setForeground(Color.GREEN);
-						textFieldCodPaciente.setText(conector.getSiguientePaciente());
-						textFieldNombre.setText("");						
-					} else {
-						lblResultadoQuery.setText("Error al grabar");
+					if(!validarCampos(textFieldNombre.getText())){
+						lblResultadoQuery.setText("El nombre no puede estar vacío");
 						lblResultadoQuery.setForeground(Color.RED);
+					} else {
+						if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText())){
+							lblResultadoQuery.setText("Grabado");
+							lblResultadoQuery.setForeground(Color.GREEN);
+							textFieldCodPaciente.setText(conector.getSiguientePaciente());
+							textFieldNombre.setText("");						
+						} else {
+							lblResultadoQuery.setText("Error al grabar");
+							lblResultadoQuery.setForeground(Color.RED);
+						}
 					}
-				
-			
 			}
 		});
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -152,5 +155,11 @@ public class IngresoPaciente extends JFrame {
 
 	}
 	
+	private boolean validarCampos(String nombre){
+		if(nombre.equals(null) || nombre.equals("")){
+			return false;
+		}
+		return true;
+	}
 	
 }

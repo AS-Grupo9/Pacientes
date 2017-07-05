@@ -139,7 +139,7 @@ public class IngresoDiagnostico extends JFrame {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				
 				if(dateChooserFecha.getDate() == null || dateChooserFecha.getDate().equals("")){
 					lblResult.setText("El campo fecha no puede estar vacío");

@@ -129,7 +129,7 @@ public class IngresoMedico extends JFrame {
 		
 		final JLabel lblResultadoQuery = new JLabel("");
 		lblResultadoQuery.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblResultadoQuery.setBounds(10, 234, 161, 14);
+		lblResultadoQuery.setBounds(10, 234, 308, 14);
 		panel.add(lblResultadoQuery);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -150,21 +150,30 @@ public class IngresoMedico extends JFrame {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-					if(conector.insertarMedico(conector.getSiguienteMedico(), textFieldNombre.getText(),comboBoxEsp1.getSelectedItem(),comboBoxEsp2.getSelectedItem(),comboBoxEsp3.getSelectedItem())){
-						lblResultadoQuery.setText("Grabado");
-						lblResultadoQuery.setForeground(Color.GREEN);
-						textFieldCodPaciente.setText(conector.getSiguienteMedico());
-						textFieldNombre.setText("");
-						refrescarEspecialidades();
-						
+				if(!validarNombre(textFieldNombre.getText())){
+					lblResultadoQuery.setText("El nombre no puede estar vacío");
+					lblResultadoQuery.setForeground(Color.RED);
+				} else {
+					if(!validarEspecialidades(comboBoxEsp1.getSelectedItem(),comboBoxEsp2.getSelectedItem(),comboBoxEsp3.getSelectedItem())){
+						lblResultadoQuery.setText("Debe seleccionar al menos una especialidad");
+						lblResultadoQuery.setForeground(Color.RED);
 					} else {
-						lblResultadoQuery.setText("Error al grabar");
-						lblResultado.setForeground(Color.RED);
+						if(conector.insertarMedico(conector.getSiguienteMedico(), textFieldNombre.getText(),comboBoxEsp1.getSelectedItem(),comboBoxEsp2.getSelectedItem(),comboBoxEsp3.getSelectedItem())){
+							lblResultadoQuery.setText("Grabado");
+							lblResultadoQuery.setForeground(Color.GREEN);
+							textFieldCodPaciente.setText(conector.getSiguienteMedico());
+							textFieldNombre.setText("");
+							refrescarEspecialidades();
+							
+						} else {
+							lblResultadoQuery.setText("Error al grabar");
+							lblResultado.setForeground(Color.RED);
+						}
 					}
-				
-			
+					
+					
+					
+				}			
 			}
 		});
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -184,15 +193,11 @@ public class IngresoMedico extends JFrame {
 		panel.add(labelEspecialidad2);
 		
 
-		
 		JLabel labelEspeciaidad3 = new JLabel("Especialidad 3:");
 		labelEspeciaidad3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		labelEspeciaidad3.setBounds(10, 158, 121, 14);
 		panel.add(labelEspeciaidad3);
-		
 
-		
-		
 
 	}
 	
@@ -219,5 +224,19 @@ public class IngresoMedico extends JFrame {
 		this.comboBoxEsp2.removeAllItems();	
 		this.comboBoxEsp3.removeAllItems();	
 		llenarEspecialidades();	
+	}
+	
+	private boolean validarNombre(String nombre){
+		if(nombre.equals(null) || nombre.equals("")){
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean validarEspecialidades(Object e1, Object e2, Object e3){
+		if(e1.equals("") && e2.equals("") && e3.equals("") ){
+			return false;
+		}
+		return true;
 	}
 }
