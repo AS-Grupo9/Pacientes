@@ -1,0 +1,19 @@
+﻿Laureles v1.0
+
+Analisis de Software
+Comision 5900
+Grupo 9
+Turno Viernes Noche
+Año 2017
+
+Integrantes: 
+	- Landaburu, Ignacio
+	- Mondaini, Adriano
+	- Toloza, Mariano
+	- Trotta, Mauro
+	- Vera, Cristian
+	
+Docentes:
+	- Lic. Vinjoy, Marcelo
+	- Ing. Landaburu, Roberto
+	- Lic. Agustin, Gustavo
