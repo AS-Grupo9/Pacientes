@@ -6,6 +6,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import db.Log4J;
+
 import javax.swing.JComboBox;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -22,7 +28,7 @@ import java.awt.Toolkit;
 public class Principal extends JFrame {
 
 	private JPanel contentPane;
-
+	private static final Logger log = LogManager.getLogger(Log4J.class.getName());
 	/**
 	 * Launch the application.
 	 */
@@ -34,7 +40,7 @@ public class Principal extends JFrame {
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e.getMessage());
 				}
 			}
 		});

@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import db.DBControlador;
+import db.Log4J;
 import utilidades.ComboBoxItem;
 
 import javax.swing.JButton;
@@ -27,6 +28,9 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.toedter.calendar.JDateChooser;
 import java.awt.Toolkit;
 
@@ -40,7 +44,7 @@ public class IngresoDiagnostico extends JFrame {
 	private int codigoMedico ;
 	private JDateChooser dateChooserFecha;
 	private JLabel lblResult;
-	
+	private static final Logger log = LogManager.getLogger(Log4J.class.getName());
 	private final DBControlador conector = new DBControlador();
 	/**
 	 * Launch the application.
@@ -53,7 +57,7 @@ public class IngresoDiagnostico extends JFrame {
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e.getMessage());
 				}
 			}
 		});
@@ -151,7 +155,9 @@ public class IngresoDiagnostico extends JFrame {
 						//lblResult.setText("Complete todos los campos");
 						//lblResult.setForeground(Color.RED);
 					} else {
+						
 						if(conector.insertarDiagnostico(comboBoxMedico.getSelectedItem(), comboBoxPaciente.getSelectedItem(), textAreaDiagnostico.getText(),formatted)){
+							log.info("Se creó el diagnóstico correctamente: " + textAreaDiagnostico.getText());
 							lblResult.setText("Grabado");
 							lblResult.setForeground(Color.GREEN);
 							refrescarPacientes();
@@ -159,6 +165,7 @@ public class IngresoDiagnostico extends JFrame {
 							textAreaDiagnostico.setText("");
 							
 						} else {
+							log.error("Error al crear un diagnóstico");
 							lblResult.setText("Error al grabar");
 							lblResult.setForeground(Color.RED);
 						}
@@ -201,8 +208,7 @@ public class IngresoDiagnostico extends JFrame {
 				this.comboBoxMedico.addItem(item);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			//System.out.println("ERROR");
+			log.error(e.getMessage());
 		}	
 	}
 	
@@ -215,8 +221,8 @@ public class IngresoDiagnostico extends JFrame {
 				this.comboBoxPaciente.addItem(item);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("ERROR");
+			log.error(e.getMessage());
+			
 		}	
 	}
 	

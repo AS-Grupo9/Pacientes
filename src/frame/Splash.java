@@ -7,7 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import db.DBControlador;
+import db.Log4J;
 
 import javax.swing.JComboBox;
 import javax.swing.JMenuBar;
@@ -24,9 +28,11 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import java.awt.Toolkit;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 public class Splash extends JFrame {
 
+	private static final Logger log = LogManager.getLogger(Log4J.class.getName());
 	private JPanel contentPane;
 	private JTextField textFieldUsuario;
 	private JPasswordField passwordFieldPass;
@@ -43,7 +49,7 @@ public class Splash extends JFrame {
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e.getMessage());
 				}
 			}
 		});
@@ -77,12 +83,12 @@ public class Splash extends JFrame {
 					Principal ppal = new Principal();
 					ppal.setLocationRelativeTo(null);
 					ppal.setVisible(true);
+					log.info("El usuario " + textFieldUsuario.getText() +" inició sesión");
 					dispose();
 				} else {
-					
+					log.warn("El usuario " + textFieldUsuario.getText()+" intentó iniciar sesión" );
 				}
-				
-				
+	
 			}
 		});
 		btnIngresoDatos.setBounds(256, 124, 311, 23);

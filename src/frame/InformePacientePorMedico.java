@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import db.DBControlador;
+import db.Log4J;
 import net.proteanit.sql.DbUtils;
 import utilidades.ComboBoxItem;
 
@@ -26,6 +27,9 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 import java.awt.Toolkit;
@@ -33,6 +37,7 @@ import java.awt.Toolkit;
 public class InformePacientePorMedico extends JFrame {
 
 	private JPanel contentPane;
+	private static final Logger log = LogManager.getLogger(Log4J.class.getName());
 	private final DBControlador conector = new DBControlador();
 	private String[] cabecera = {"Código","Médico","Paciente"};
 	private JTable table;
@@ -48,7 +53,7 @@ public class InformePacientePorMedico extends JFrame {
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e.getMessage());
 				}
 			}
 		});
@@ -135,8 +140,7 @@ public class InformePacientePorMedico extends JFrame {
 				this.comboBoxMedicos.addItem(item);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("ERROR");
+			log.error(e.getMessage());
 		}	
 	}
 }

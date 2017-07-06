@@ -7,7 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import db.DBControlador;
+import db.Log4J;
 import net.proteanit.sql.DbUtils;
 import utilidades.ComboBoxItem;
 
@@ -31,6 +35,7 @@ import java.awt.Toolkit;
 public class InformeEspecialidadPorMedico extends JFrame {
 
 	private JPanel contentPane;
+	private static final Logger log = LogManager.getLogger(Log4J.class.getName());
 	private final DBControlador conector = new DBControlador();
 	private String[] cabecera = {"Código","Médico","Paciente"};
 	private JTable table;
@@ -46,7 +51,7 @@ public class InformeEspecialidadPorMedico extends JFrame {
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e.getMessage());
 				}
 			}
 		});
@@ -134,8 +139,8 @@ public class InformeEspecialidadPorMedico extends JFrame {
 				this.comboBoxMedicos.addItem(item);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("ERROR");
+			log.error(e.getMessage());
+			//System.out.println("ERROR");
 		}	
 	}
 }

@@ -8,7 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import db.DBControlador;
+import db.Log4J;
 
 import javax.swing.JButton;
 import java.awt.GridLayout;
@@ -31,7 +35,7 @@ public class IngresoPaciente extends JFrame {
 	private JTextField textFieldCodPaciente;
 	private JTextField textFieldNombre;
 	private final JLabel lblResultado;
-	
+	private static final Logger log = LogManager.getLogger(Log4J.class.getName());
 	private final DBControlador conector = new DBControlador();
 	/**
 	 * Launch the application.
@@ -44,7 +48,7 @@ public class IngresoPaciente extends JFrame {
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e.getMessage());
 				}
 			}
 		});
@@ -133,12 +137,15 @@ public class IngresoPaciente extends JFrame {
 						lblResultadoQuery.setText("El nombre no puede estar vacío");
 						lblResultadoQuery.setForeground(Color.RED);
 					} else {
-						if(conector.insertarPaciente(conector.getSiguientePaciente(), textFieldNombre.getText())){
+						String idPaciente = conector.getSiguientePaciente();
+						if(conector.insertarPaciente(idPaciente, textFieldNombre.getText())){
+							log.info("Se creó el paciente: " + idPaciente + " - " + textFieldNombre.getText());
 							lblResultadoQuery.setText("Grabado");
 							lblResultadoQuery.setForeground(Color.GREEN);
 							textFieldCodPaciente.setText(conector.getSiguientePaciente());
 							textFieldNombre.setText("");						
 						} else {
+							log.error("Error al grabar el paciente: " + idPaciente + " - " + textFieldNombre.getText());
 							lblResultadoQuery.setText("Error al grabar");
 							lblResultadoQuery.setForeground(Color.RED);
 						}

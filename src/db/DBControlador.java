@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import controlpac.Paciente;
 import utilidades.ComboBoxItem;
 
@@ -16,14 +19,14 @@ import utilidades.ComboBoxItem;
 public class DBControlador
 {
 	private Connection con = null;
-	
+	private static final Logger log = LogManager.getLogger(Log4J.class.getName());
 	public void conectar(){    
 		try {
 	      Class.forName("org.sqlite.JDBC");
 	      this.con = DriverManager.getConnection("jdbc:sqlite:laureles.db");
 	    } catch ( Exception e ) {
-	   //   System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	      System.exit(0);
+	    	log.error(e.getMessage());
+	    	System.exit(0);
 	    }
 	  //  System.out.println("Base de datos abierta correctamente");
 	}
@@ -31,10 +34,10 @@ public class DBControlador
 	public void close(){    
 		try {
 	      this.con.close();
-	      System.out.println("Base de datos cerrada correctamente");
+	     // System.out.println("Base de datos cerrada correctamente");
 	    } catch ( Exception e ) {
-	    //	System.out.println("Error al cerrar la base de datos");
-	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	    	log.error(e.getMessage());
+	    	//System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
 	}
@@ -71,8 +74,9 @@ public class DBControlador
 				
 				return true;
 			} catch (SQLException e) {
-			//	System.out.println("Error al ejecutar la query: " + query);
-				e.printStackTrace();
+				log.error(e.getMessage());
+				//	System.out.println("Error al ejecutar la query: " + query);
+				//e.printStackTrace();
 				this.close();
 				return false;
 			}	
@@ -92,6 +96,7 @@ public class DBControlador
 			this.close();
 			return siguienteValor;
 		} catch (Exception e){
+			log.error(e.getMessage());
 			//System.out.println("Error al ejecutar la query: " + query);
 			//e.printStackTrace();
 			this.close();
@@ -108,7 +113,7 @@ public class DBControlador
 			return rs;
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
-			e.printStackTrace();
+			log.error(e.getMessage());
 			
 			return null;
 		}
@@ -133,7 +138,7 @@ public class DBControlador
 			return siguienteValor;
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
-			//e.printStackTrace();
+			log.error(e.getMessage());
 			this.close();
 			return "ERROR";
 		}
@@ -148,7 +153,7 @@ public class DBControlador
 			return rs;
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
-			e.printStackTrace();
+			log.error(e.getMessage());
 			return null;
 		}
 	}
@@ -197,7 +202,7 @@ public class DBControlador
 			return true;
 		} catch (SQLException e) {
 			//System.out.println("Error al ejecutar la query: " + query);
-			//e.printStackTrace();
+			log.error(e.getMessage());
 			this.close();
 			return false;
 		}
@@ -217,7 +222,7 @@ public class DBControlador
 				return true;
 			} catch (SQLException e) {
 			//	System.out.println("Error al ejecutar la query: " + query);
-				//e.printStackTrace();
+				log.error(e.getMessage());
 				this.close();
 				return false;
 			}
@@ -248,7 +253,7 @@ public class DBControlador
 			return true;
 		} catch (SQLException e) {
 		//	System.out.println("Error al ejecutar la query: " + query);
-			//e.printStackTrace();
+			log.error(e.getMessage());
 			this.close();
 			return false;
 		}
@@ -265,7 +270,7 @@ public class DBControlador
 			return rs;
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
-			e.printStackTrace();
+			log.error(e.getMessage());
 			return null;
 		}
 	}
@@ -280,7 +285,7 @@ public class DBControlador
 			return rs;
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
-			e.printStackTrace();
+			log.error(e.getMessage());
 			return null;
 		}
 	}
@@ -295,7 +300,7 @@ public class DBControlador
 			return rs;
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
-			e.printStackTrace();
+			log.error(e.getMessage());
 			return null;
 		}
 	}
@@ -328,7 +333,7 @@ public class DBControlador
 				
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
-			e.printStackTrace();
+			log.error(e.getMessage());
 			
 			return false;
 		}
@@ -354,7 +359,7 @@ public class DBControlador
 			
 		} catch (Exception e){
 		//	System.out.println("Error al ejecutar la query: " + query);
-			e.printStackTrace();
+			log.error(e.getMessage());
 			this.close();
 			return null;
 		}
@@ -416,7 +421,7 @@ public class DBControlador
 			return true;
 		} catch (SQLException e) {
 			//System.out.println("Error al ejecutar la query: " + query);
-			//e.printStackTrace();
+			log.error(e.getMessage());
 			this.close();
 			return false;
 		}

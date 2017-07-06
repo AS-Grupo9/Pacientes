@@ -8,7 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import db.DBControlador;
+import db.Log4J;
 import utilidades.ComboBoxItem;
 
 import javax.swing.JButton;
@@ -33,7 +37,7 @@ public class IngresoMedico extends JFrame {
 	private JTextField textFieldNombre;
 	private final JLabel lblResultado;
 	private JComboBox comboBoxEsp1, comboBoxEsp2 ,comboBoxEsp3 ; 
-	
+	private static final Logger log = LogManager.getLogger(Log4J.class.getName());
 	private final DBControlador conector = new DBControlador();
 	/**
 	 * Launch the application.
@@ -46,7 +50,7 @@ public class IngresoMedico extends JFrame {
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e.getMessage());
 				}
 			}
 		});
@@ -158,7 +162,9 @@ public class IngresoMedico extends JFrame {
 						lblResultadoQuery.setText("Debe seleccionar al menos una especialidad");
 						lblResultadoQuery.setForeground(Color.RED);
 					} else {
-						if(conector.insertarMedico(conector.getSiguienteMedico(), textFieldNombre.getText(),comboBoxEsp1.getSelectedItem(),comboBoxEsp2.getSelectedItem(),comboBoxEsp3.getSelectedItem())){
+						String idMedico = conector.getSiguienteMedico();
+						if(conector.insertarMedico(idMedico, textFieldNombre.getText(),comboBoxEsp1.getSelectedItem(),comboBoxEsp2.getSelectedItem(),comboBoxEsp3.getSelectedItem())){
+							log.info("Se creó el médico: " + idMedico + " - " + textFieldNombre.getText());
 							lblResultadoQuery.setText("Grabado");
 							lblResultadoQuery.setForeground(Color.GREEN);
 							textFieldCodPaciente.setText(conector.getSiguienteMedico());
@@ -166,6 +172,7 @@ public class IngresoMedico extends JFrame {
 							refrescarEspecialidades();
 							
 						} else {
+							log.error("Error al grabar el médico: " + idMedico + " - " + textFieldNombre.getText());
 							lblResultadoQuery.setText("Error al grabar");
 							lblResultado.setForeground(Color.RED);
 						}
@@ -214,8 +221,7 @@ public class IngresoMedico extends JFrame {
 				this.comboBoxEsp3.addItem(item);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("ERROR");
+			log.error(e.getMessage());			
 		}	
 	}
 	

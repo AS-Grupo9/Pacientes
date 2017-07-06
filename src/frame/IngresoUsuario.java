@@ -10,7 +10,11 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.JTextComponent;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import db.DBControlador;
+import db.Log4J;
 
 import javax.swing.JButton;
 import java.awt.GridLayout;
@@ -33,7 +37,7 @@ public class IngresoUsuario extends JFrame {
 	private JTextField textFieldCodUsuario;
 	private JTextField textFieldNombre;
 	private final JLabel lblResultado;
-	
+	private static final Logger log = LogManager.getLogger(Log4J.class.getName());
 	private final DBControlador conector = new DBControlador();
 	private JTextComponent lblResultadoQuery;
 	private JPasswordField passwordFieldA;
@@ -49,7 +53,8 @@ public class IngresoUsuario extends JFrame {
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e.getMessage());
+					
 				}
 			}
 		});
@@ -131,6 +136,7 @@ public class IngresoUsuario extends JFrame {
 					
 				} else {
 					if(conector.insertarUsuario(textFieldCodUsuario.getText(),textFieldNombre.getText(),passwordFieldA.getText())){
+						log.info("Se creó el usuario " + textFieldCodUsuario.getText());
 						lblResultado.setText("Grabado");
 						lblResultado.setForeground(Color.GREEN);
 						textFieldCodUsuario.setText("");
@@ -138,6 +144,7 @@ public class IngresoUsuario extends JFrame {
 						passwordFieldA.setText("");
 						passwordFieldB.setText("");
 					} else {
+						log.error("No se pudo crear el usuario " + textFieldCodUsuario.getText());
 						lblResultado.setText("Error al grabar");
 						lblResultado.setForeground(Color.RED);
 					}
